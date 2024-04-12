@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>这是查看结果</h1>
+    <h1>这是设置</h1>
   </div>
 </template>
 

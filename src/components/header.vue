@@ -14,7 +14,7 @@ const toggleFullScreen = () => {
 }
 </script>
 <template>
-  <div class="flex justify-between items-center h-5vh">
+  <div class="flex justify-between items-center h-5vh mb-2">
     <div>
       <i></i>
       <span class="font-size-6 font-700">YoYoScore</span>
