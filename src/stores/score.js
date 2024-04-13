@@ -8,6 +8,9 @@ export const useScoreStore = defineStore('score', {
     cont: { name: '', score: 0, rank: 0 },
     contInfo: []
   }),
+  getters: {
+    computedScore: (state) => state.pointadd - state.pointmin
+  },
   actions: {
     sum(sumMode) {
       if (sumMode === 'add') {

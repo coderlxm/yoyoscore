@@ -3,13 +3,13 @@ import 'normalize.css';
 import 'virtual:uno.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(router)
 
 app.directive('longpress', {
@@ -25,7 +25,7 @@ app.directive('longpress', {
         pressTimer = setTimeout(() => {
           // 长按事件的处理函数
           handler();
-        }, 2000); // 长按时间阈值设置为2000毫秒
+        }, 1500); // 长按时间阈值设置为2000毫秒
       }
     };
 
