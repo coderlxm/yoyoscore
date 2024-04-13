@@ -6,7 +6,9 @@ export const useSettingStore = defineStore('setting', {
       trigger: 1,
       vibrate: '1',
       vibMethod: '2'
-    }
+    },
+    primaryColor: '#f01654',
+    darkTheme: 'light'
   }),
   persist: true
 })

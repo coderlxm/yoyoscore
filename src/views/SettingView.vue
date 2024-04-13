@@ -17,17 +17,18 @@ vibSw.value = store.$state.settingForm.vibrate
 vibMethod.value = store.$state.settingForm.vibMethod
 const onSubmit = (values) => {
   store.$patch({ settingForm: values })
+  router.push({ name: 'home' })
 }
 </script>
 <template>
-  <van-form ref="formRef" class="mt-5" colon label-width="33vw" @submit="onSubmit">
+  <van-form ref="formRef" class="mt-10" colon label-width="33vw" @submit="onSubmit">
     <div class="item-border mb-10">
       <div class="ml-4 mb-2">除+、-按钮外的按钮触发方式</div>
       <van-field name="trigger" label="按钮触发方式">
         <template #input>
           <van-radio-group v-model="triggerMode" direction="horizontal">
-            <van-radio :name="1">长按</van-radio>
-            <van-radio :name="0">短按</van-radio>
+            <van-radio checked-color="#f01654" :name="1">长按</van-radio>
+            <van-radio checked-color="#f01654" :name="0">短按</van-radio>
           </van-radio-group>
         </template>
       </van-field>
@@ -37,36 +38,36 @@ const onSubmit = (values) => {
       <van-field name="audio" label="音效开关">
         <template #input>
           <van-radio-group v-model="audioSw" direction="horizontal">
-            <van-radio name="1">开启</van-radio>
-            <van-radio name="2">关闭</van-radio>
+            <van-radio checked-color="#f01654" name="1">开启</van-radio>
+            <van-radio checked-color="#f01654" name="2">关闭</van-radio>
           </van-radio-group>
         </template>
       </van-field>
     </div>
     <div class="item-border mb-10">
-      <div class="ml-4 mb-2">是否开启震动（暂未支持）</div>
+      <div class="ml-4 mb-2">是否开启震动（请切换全屏使用）</div>
       <van-field name="vibrate" label="震动开关">
         <template #input>
           <van-radio-group v-model="vibSw" direction="horizontal">
-            <van-radio name="1">开启</van-radio>
-            <van-radio name="2">关闭</van-radio>
+            <van-radio checked-color="#f01654" name="1">开启</van-radio>
+            <van-radio checked-color="#f01654" name="2">关闭</van-radio>
           </van-radio-group>
         </template>
       </van-field>
       <van-field v-if="vibSw === '1'" name="vibMethod" label="震动方式">
         <template #input>
           <van-radio-group v-model="vibMethod" direction="horizontal">
-            <van-radio name="1">长震动</van-radio>
-            <van-radio name="2">短震动</van-radio>
+            <van-radio checked-color="#f01654" name="1">长震动</van-radio>
+            <van-radio checked-color="#f01654" name="2">短震动</van-radio>
           </van-radio-group>
         </template>
       </van-field>
     </div>
     <div style="margin: 16px;" class="grid gap-5">
-      <van-button round block type="primary" native-type="submit">
+      <van-button color="#f01654" round block type="primary" native-type="submit">
         保存设置
       </van-button>
-      <van-button @click="back" round block plain type="primary">
+      <van-button color="#f01654" @click="back" round block plain type="primary">
         返回
       </van-button>
     </div>

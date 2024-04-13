@@ -13,7 +13,10 @@ const { pointadd, pointmin, computedScore } = storeToRefs(scoreStore)
 // const activeNames = ref(['1', '2', '3']);
 const save = () => {
   const contsObj = { pointadd: pointadd.value, pointmin: pointmin.value, sumScore: computedScore.value, name: store.$state.name, game: store.$state.game }
-  store.$state.recordedGames.push(contsObj)
+  let isAllNull = Object.values(contsObj).every(item => item == 0 || item == '')
+  if (!isAllNull) {
+    store.$state.recordedGames.push(contsObj)
+  }
   scoreStore.pressToZero()
   store.$state.game = ''
   store.$state.name = ''
@@ -24,7 +27,7 @@ const chooseThisTag = (item) => {
 }
 </script>
 <template>
-  <div>
+  <div class="mt-10">
     <van-collapse v-model="store.$state.activeNames">
       <van-collapse-item title="选手分数" name="1">
         <van-form ref="formRef" colon label-width="33vw">
@@ -35,7 +38,7 @@ const chooseThisTag = (item) => {
           </van-field>
           <van-field name="trigger" label="负分">
             <template #input>
-              <span class="color-red font-700 font-size-5">- {{ pointmin }}</span>
+              <span class="color-#f01654 font-700 font-size-5">-{{ pointmin }}</span>
             </template>
           </van-field>
           <van-field name="trigger" label="总得分">
@@ -53,22 +56,26 @@ const chooseThisTag = (item) => {
       <van-collapse-item title="比赛名称" name="3">
         <van-cell-group inset>
           <van-field v-model="store.$state.game" label="请输入或选择" placeholder="比赛名称" />
-          <div class="mt-3 flex gap-2" v-if="store.$state.recordedGames.length">
-            <van-tag @click="chooseThisTag(item)" v-for="(item, index) in store.gamesList" :key="index" type="primary"
-              size="large">{{ item }}</van-tag>
+          <div class="mt-3 grid gap-2 w-full tags" v-if="store.$state.recordedGames.length">
+            <van-tag color="#f01654" @click="chooseThisTag(item)" v-for="(item, index) in store.gamesList" :key="index"
+              type="primary" size="large">{{ item }}</van-tag>
           </div>
         </van-cell-group>
       </van-collapse-item>
     </van-collapse>
     <div style="margin: 16px;" class="grid gap-5">
-      <van-button @click="save" round block type="primary">
+      <van-button color="#f01654" @click="save" round block type="primary">
         保存
       </van-button>
-      <van-button @click="back" round block plain type="primary">
+      <van-button color="#f01654" @click="back" round block plain type="primary">
         返回
       </van-button>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.tags {
+  grid-template-columns: 1fr 1fr;
+}
+</style>

@@ -7,7 +7,7 @@ export const useRecordStore = defineStore('record', {
     name: ''
   }),
   getters: {
-    gamesList: (state) => [...new Set(state.recordedGames.map(item => item.game))],
+    gamesList: (state) => [...new Set(state.recordedGames.map(item => item.game))].filter((item) => item !== ''),
     recordGroupedAndRanked: (state) => {
       let value = state.recordedGames.reduce((groups, record) => {
         if (!groups[record.game]) {

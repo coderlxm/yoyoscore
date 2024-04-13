@@ -31,14 +31,14 @@ const back = () => {
 }
 </script>
 <template>
-  <div class="flex gap-3 mb-5 w-full">
-    <van-button class="flex-1" @click="toggleScoreMode" size="small" plain color="#7232dd">切换分数显示模式</van-button>
-    <van-button class="flex-1" @click="edit" size="small" color="#7232dd">{{ isEditMode ? '退出编辑' : '编辑' }}</van-button>
+  <div class="flex gap-3 mb-5 w-full mt-8">
+    <van-button class="flex-1" @click="toggleScoreMode" size="small" plain color="#f01654">切换分数显示模式</van-button>
+    <van-button class="flex-1" @click="edit" size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑' }}</van-button>
   </div>
   <van-collapse v-model="store.$state.activeNames">
     <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
       <template #title>
-        <div class="flex justify-between font-700 font-size-4">
+        <div class="pr-2 flex justify-between font-700 font-size-4 color-#f01654">
           <div>比赛名称</div>
           <div>{{ key }}</div>
         </div>
@@ -51,9 +51,11 @@ const back = () => {
       </van-cell-group>
     </van-collapse-item> -->
   </van-collapse>
-  <van-button color="#7232dd" @click="back" round block plain>
-    返回
-  </van-button>
+  <div class="mt-4">
+    <van-button color="#f01654" @click="back" round block plain>
+      返回
+    </van-button>
+  </div>
 </template>
 
 <style></style>

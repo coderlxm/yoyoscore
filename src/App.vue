@@ -1,23 +1,37 @@
 <script setup>
 import Header from '@/components/header.vue'
 import { useRoute } from "vue-router";
+import { useSettingStore } from './stores/setting';
+const store = useSettingStore()
 const route = useRoute()
+const changeTheme = (value) => {
+  store.$state.darkTheme = value
+}
 </script>
 
 <template>
-  <div class="container">
-    <Header></Header>
-    <RouterView v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" :key="route.name" />
-      </transition>
-    </RouterView>
-  </div>
+  <van-config-provider :theme="store.$state.darkTheme">
+    <div class="container">
+      <Header :currentTheme="store.$state.darkTheme" @changeTheme="changeTheme"></Header>
+      <RouterView v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </RouterView>
+    </div>
+  </van-config-provider>
 </template>
 
-<style scoped>
+<style>
+.van-theme-dark body {
+  color: #f5f5f5;
+  background-color: black;
+}
+
 .container {
-  padding: 1rem;
+  align-items: center;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   min-height: 100%;
 }
 
