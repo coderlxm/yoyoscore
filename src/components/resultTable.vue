@@ -1,7 +1,9 @@
 <script setup>
 import { useResultStore } from "@/stores/result";
+import { useSettingStore } from "@/stores/setting";
 const props = defineProps(['results', 'isEditMode', 'scoreMode'])
 const emit = defineEmits(['del'])
+const settingStore = useSettingStore()
 const store = useResultStore()
 const delRecord = (item) => {
   emit('del', item)
@@ -26,7 +28,10 @@ const delRecord = (item) => {
             }}</span> -->
           <span>{{ store.dealScoreDisplay(props, item) }}</span>
         </td>
-        <td class="w-24vw text-center">{{ index + 1 }}</td>
+        <td class="w-24vw text-center">{{ settingStore.settingForm.sort === '1' ? index + 1 : props.results.length -
+          index
+          }}
+        </td>
         <td class="w-8vw text-center" v-if="props.isEditMode">
           <van-button @click="delRecord(item)" color="#f01654" size="mini">删除</van-button>
         </td>

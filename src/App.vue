@@ -10,8 +10,8 @@ const changeTheme = (value) => {
 </script>
 
 <template>
-  <van-config-provider :theme="store.$state.darkTheme">
-    <div class="container">
+  <van-config-provider class="h-full" :theme="store.$state.darkTheme">
+    <div class="container1">
       <Header :currentTheme="store.$state.darkTheme" @changeTheme="changeTheme"></Header>
       <RouterView v-slot="{ Component }">
         <transition name="fade">
@@ -28,7 +28,7 @@ const changeTheme = (value) => {
   background-color: black;
 }
 
-.container {
+.container1 {
   align-items: center;
   padding-left: 1.5rem;
   padding-right: 1.5rem;

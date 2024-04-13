@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useSettingStore } from "./setting";
 export const useRecordStore = defineStore('record', {
   state: () => ({
     activeNames: ['1', '2', '3'],
@@ -21,7 +22,11 @@ export const useRecordStore = defineStore('record', {
           // 确保每个对象都有 sumScore 字段，如果没有，则尝试使用 score 字段
           const scoreA = 'sumScore' in a ? a.sumScore : a.score;
           const scoreB = 'sumScore' in b ? b.sumScore : b.score;
-          return scoreB - scoreA;
+          if (useSettingStore().$state.settingForm.sort === '1') {
+            return scoreB - scoreA
+          } else if (useSettingStore().$state.settingForm.sort === '0') {
+            return scoreA - scoreB
+          }
         });
       });
       return value

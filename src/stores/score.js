@@ -17,11 +17,15 @@ export const useScoreStore = defineStore('score', {
     sum(sumMode) {
       const keydownAudio = new Audio(keyDownAudio)
       const { settingForm } = storeToRefs(useSettingStore())
+      if (settingForm.value.audio === '1') keydownAudio.play()
+      if (settingForm.value.vibrate === '1' && settingForm.value.vibMethod === '1') {
+        navigator.vibrate(200)
+      } else if (settingForm.value.vibrate === '1' && settingForm.value.vibMethod === '2') {
+        navigator.vibrate(25)
+      }
       if (sumMode === 'add') {
-        if (settingForm.value.audio === '1') keydownAudio.play()
         this.pointadd += 1
       } else {
-        if (settingForm.value.audio === '1') keydownAudio.play()
         this.pointmin += 1
       }
     },

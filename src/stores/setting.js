@@ -5,7 +5,8 @@ export const useSettingStore = defineStore('setting', {
       audio: '1',
       trigger: 1,
       vibrate: '1',
-      vibMethod: '2'
+      vibMethod: '2',
+      sort: '1'
     },
     primaryColor: '#f01654',
     darkTheme: 'light'
