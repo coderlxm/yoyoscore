@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useScoreStore } from "@/stores/score";
+import { useSettingStore } from "@/stores/setting";
+import { storeToRefs } from "pinia";
+const { settingForm } = storeToRefs(useSettingStore())
 const router = useRouter()
 const toSetting = () => {
   router.push({ name: 'setting' })
@@ -30,10 +32,18 @@ const toResult = () => {
       </div>
     </van-button>
     <div class="grid gap-3 grid-auto-flow-row-dense button-grid">
-      <van-button color="#7232dd" v-longpress="store.pressToZero" round plain>长按清零</van-button>
-      <van-button @click="toRecord" color="#7232dd" round plain>长按记录</van-button>
-      <van-button v-longpress="toSetting" color="#7232dd" round plain>长按设置</van-button>
-      <van-button @click="toResult" color="#7232dd" round plain>长按查看结果</van-button>
+      <van-button color="#7232dd"
+        v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+        round plain>{{ settingForm.trigger === 1 ? '长按清零' : '清零' }}</van-button>
+      <van-button
+        v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+        color="#7232dd" round plain>{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</van-button>
+      <van-button
+        v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+        color="#7232dd" round plain>{{ settingForm.trigger === 1 ? '长按设置' : '设置' }}</van-button>
+      <van-button
+        v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+        color="#7232dd" round plain>{{ settingForm.trigger === 1 ? '长按查看结果' : '查看结果' }}</van-button>
     </div>
   </div>
 </template>

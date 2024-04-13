@@ -1,6 +1,8 @@
 // import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
+import { useSettingStore } from "./setting";
+import keyDownAudio from '@/assets/sounds/typing.mp3'
+import { storeToRefs } from 'pinia';
 export const useScoreStore = defineStore('score', {
   state: () => ({
     pointadd: 0,
@@ -13,9 +15,13 @@ export const useScoreStore = defineStore('score', {
   },
   actions: {
     sum(sumMode) {
+      const keydownAudio = new Audio(keyDownAudio)
+      const { settingForm } = storeToRefs(useSettingStore())
       if (sumMode === 'add') {
+        if (settingForm.value.audio === '1') keydownAudio.play()
         this.pointadd += 1
       } else {
+        if (settingForm.value.audio === '1') keydownAudio.play()
         this.pointmin += 1
       }
     },

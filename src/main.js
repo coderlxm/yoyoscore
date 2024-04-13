@@ -21,31 +21,41 @@ app.directive('longpress', {
       if (e.type === 'click' && e.button !== 0) {
         return; // 如果不是鼠标左键点击，则不处理
       }
-      if (pressTimer === null) {
-        pressTimer = setTimeout(() => {
-          // 长按事件的处理函数
-          handler();
-        }, 1500); // 长按时间阈值设置为2000毫秒
+
+      if (binding.value.enabled) {
+        if (pressTimer === null) {
+          pressTimer = setTimeout(() => {
+            // 长按事件的处理函数
+            handler(e);
+          }, binding.value.duration || 1000); // 使用传递的持续时间或默认为1000毫秒
+        }
       }
     };
 
     // 定义取消触摸/点击的函数
-    const cancel = () => {
+    const cancel = (e) => {
       if (pressTimer !== null) {
         clearTimeout(pressTimer);
         pressTimer = null;
       }
+
+      // 如果长按未触发并且开关未启用长按，则调用短按处理函数
+      if (!binding.value.enabled && binding.value.onShortPress) {
+        binding.value.onShortPress(e);
+      }
     };
 
-    // 绑定的函数，长按触发时执行
+    // 长按触发的函数
     const handler = (e) => {
-      binding.value(e);
+      if (binding.value.onLongPress) {
+        binding.value.onLongPress(e);
+      }
     };
 
     // 添加事件监听
     el.addEventListener('mousedown', start);
     el.addEventListener('touchstart', start);
-    el.addEventListener('click', cancel);
+    el.addEventListener('mouseup', cancel);
     el.addEventListener('mouseout', cancel);
     el.addEventListener('touchend', cancel);
     el.addEventListener('touchcancel', cancel);
@@ -59,11 +69,13 @@ app.directive('longpress', {
     if (el._longPressHandlers) {
       el.removeEventListener('mousedown', el._longPressHandlers.start);
       el.removeEventListener('touchstart', el._longPressHandlers.start);
-      el.removeEventListener('click', el._longPressHandlers.cancel);
+      el.removeEventListener('mouseup', el._longPressHandlers.cancel);
       el.removeEventListener('mouseout', el._longPressHandlers.cancel);
       el.removeEventListener('touchend', el._longPressHandlers.cancel);
       el.removeEventListener('touchcancel', el._longPressHandlers.cancel);
     }
   }
 });
+
+
 app.mount('#app')
