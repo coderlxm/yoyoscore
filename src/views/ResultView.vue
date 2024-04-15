@@ -75,7 +75,14 @@ watchEffect(() => {
           </div>
           <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
               color="#f01654">删除</van-button></div>
-        </div>
+          <div class="flex justify-between items-center">
+            <div class="pr-2 flex flex-1 justify-between font-700 font-size-4 color-#f01654">
+              <div>比赛名称</div>
+              <div>{{ key }}</div>
+            </div>
+            <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
+                color="#f01654">删除</van-button></div>
+          </div>
       </template>
       <result-table @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode" :results="item"></result-table>
     </van-collapse-item>
