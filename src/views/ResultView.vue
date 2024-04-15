@@ -39,11 +39,13 @@ const delGame = (item) => {
     cancelButtonColor: useSettingStore().darkTheme === 'dark' ? '#111' : '#fff',
   })
     .then(() => {
-      recordStore.recordedGames.forEach((record, index) => {
-        if (item[0].game === record.game) {
-          recordStore.recordedGames.splice(index)
-        }
-      })
+      // 下面这个方法是错的,有数组数组索引偏移的问题
+      // recordStore.recordedGames.forEach((record, index) => {
+      //   if (item[0].game === record.game) {
+      //     recordStore.recordedGames.splice(index, 1)
+      //   }
+      // })
+      recordStore.recordedGames = recordStore.recordedGames.filter((record) => item[0].game !== record.game)
     })
     .catch(() => {
       // on cancel
