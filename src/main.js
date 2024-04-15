@@ -1,6 +1,7 @@
 import './assets/main.css'
 import 'normalize.css';
 import 'virtual:uno.css'
+import 'vant/lib/index.css';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
