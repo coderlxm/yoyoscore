@@ -16,7 +16,6 @@ const del = (item) => {
   const itemAtIndex = recordStore.$state.recordedGames.findIndex((record) => item.name === record.name)
   // console.log(itemAtIndex);
   recordStore.$state.recordedGames.splice(itemAtIndex, 1)
-  console.log(recordStore.recordGroupedAndRanked);
 }
 const toggleScoreMode = () => {
   if (scoreMode.value === 0) {
@@ -29,6 +28,10 @@ const router = useRouter()
 const back = () => {
   router.push({ name: 'home' })
 }
+const delGame = (item) => {
+  const gameIndex = recordStore.recordedGames.findIndex((record) => item[0].game === record.game)
+  recordStore.recordedGames.splice(gameIndex, 1)
+}
 </script>
 <template>
   <div class="flex gap-3 mb-5 w-full mt-8">
@@ -38,9 +41,13 @@ const back = () => {
   <van-collapse v-model="store.$state.activeNames">
     <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
       <template #title>
-        <div class="pr-2 flex justify-between font-700 font-size-4 color-#f01654">
-          <div>比赛名称</div>
-          <div>{{ key }}</div>
+        <div class="flex justify-between items-center">
+          <div class="pr-2 flex flex-1 justify-between font-700 font-size-4 color-#f01654">
+            <div>比赛名称</div>
+            <div>{{ key }}</div>
+          </div>
+          <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
+              color="#f01654">删除</van-button></div>
         </div>
       </template>
       <result-table @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode" :results="item"></result-table>
