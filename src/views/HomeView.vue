@@ -31,19 +31,23 @@ const toResult = () => {
         <div class="font-size-6 mt-5">扣分：{{ store.$state.pointmin }}</div>
       </div>
     </van-button>
-    <div class="grid gap-3 grid-auto-flow-row-dense button-grid">
-      <van-button color="#f01654"
-        v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
-        round plain>{{ settingForm.trigger === 1 ? '长按清零' : '清零' }}</van-button>
-      <van-button
-        v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
-        color="#f01654" round plain>{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</van-button>
-      <van-button
-        v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
-        color="#f01654" round plain>{{ settingForm.trigger === 1 ? '长按设置' : '设置' }}</van-button>
-      <van-button
-        v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
-        color="#f01654" round plain>{{ settingForm.trigger === 1 ? '长按查看结果' : '查看结果' }}</van-button>
+    <div class="flex flex-col gap-4">
+      <div class="grid gap-3 button-grid">
+        <van-button color="#f01654"
+          v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          plain>{{ settingForm.trigger === 1 ? '长按清零' : '清零' }}</van-button>
+        <van-button
+          v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          color="#f01654" plain>{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</van-button>
+      </div>
+      <div class="grid gap-3 button-grid-2">
+        <van-button
+          v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          color="#f01654">{{ settingForm.trigger === 1 ? '长按设置' : '设置' }}</van-button>
+        <van-button
+          v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          color="#f01654">{{ settingForm.trigger === 1 ? '长按查看结果' : '查看结果' }}</van-button>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +57,10 @@ const toResult = () => {
 }
 
 .button-grid {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
+}
+
+.button-grid-2 {
+  grid-template-columns: 1fr 2fr;
 }
 </style>
