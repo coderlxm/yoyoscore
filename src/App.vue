@@ -7,12 +7,14 @@ const route = useRoute()
 const changeTheme = (value) => {
   store.$state.darkTheme = value
 }
+
 </script>
 
 <template>
   <van-config-provider class="h-full" :theme="store.$state.darkTheme">
     <div class="container1">
-      <Header :currentTheme="store.$state.darkTheme" @changeTheme="changeTheme"></Header>
+      <Header :currentTheme="store.$state.darkTheme" @changeTheme="changeTheme">
+      </Header>
       <RouterView v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" :key="route.path" />

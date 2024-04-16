@@ -1,6 +1,7 @@
 <script setup>
 import { useSettingStore } from '@/stores/setting';
-
+import { useRoute } from "vue-router";
+const route = useRoute()
 const store = useSettingStore()
 const toggleFullScreen = () => {
   if (!document.fullscreenElement) {
@@ -21,6 +22,9 @@ const toggle = () => {
   const currentTheme = props.currentTheme === 'light' ? 'dark' : 'light'
   emit('changeTheme', currentTheme)
 }
+const toggleLayout = () => {
+  store.changeBtnOrder()
+}
 </script>
 <template>
   <div class="flex justify-between items-center h-5vh mb-2 pt-12">
@@ -30,6 +34,8 @@ const toggle = () => {
         class="font-size-6 font-700">YoYoScore</span>
     </div>
     <div class="flex gap2">
+      <van-button color="#f01654" :disabled="route.name !== 'home'" size="small"
+        @click="toggleLayout">切换按钮布局</van-button>
       <van-button color="#f01654" size="small" @click="toggleFullScreen">切换全屏</van-button>
       <van-button color="#f01654" size="small" @click="toggle">{{ store.$state.darkTheme === 'dark' ? '黑夜' : '白天'
         }}</van-button>
