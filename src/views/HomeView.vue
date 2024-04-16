@@ -61,10 +61,10 @@ const toResult = () => {
 }
 
 .button-grid {
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .button-grid-2 {
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
 }
 </style>
