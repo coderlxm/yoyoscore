@@ -1,7 +1,7 @@
 <script setup>
 import { useSettingStore } from '@/stores/setting';
 import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { computed, ref, watchEffect } from "vue";
 const route = useRoute()
 const store = useSettingStore()
 const toggleFullScreen = () => {
@@ -26,18 +26,25 @@ const toggle = () => {
 const toggleLayout = () => {
   store.changeBtnOrder()
 }
+const innerWidth = ref(window.innerWidth)
+const innerHeight = ref(window.innerHeight)
 const computedSize = computed(() => {
-  const aspectRatio = window.innerWidth / window.innerHeight
-  console.log(aspectRatio);
+  const aspectRatio = innerWidth.value / innerHeight.value
+  // console.log(aspectRatio);
   return aspectRatio < (9 / 16) ? 'mini' : 'small'
 })
 const computedTitleStyle = computed(() => {
   return {
     'color': store.$state.darkTheme === 'dark' ? '#ffffff' : '#f01654',
-    'font-size': computedSize.value === 'mini' ? '5.5vw' : '4vw'
+    'font-size': computedSize.value === 'mini' ? '5vw' : '2vw'
   }
 })
-console.log(computedTitleStyle.value, computedSize.value);
+
+window.addEventListener('resize', () => {
+  console.log('123');
+  innerWidth.value = window.innerWidth
+  innerHeight.value = window.innerHeight
+});
 </script>
 <template>
   <div class="flex justify-between items-center h-5vh pt-9">
