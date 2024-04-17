@@ -12,7 +12,7 @@ A more elegant and beautiful Clicker that supports PWA offline use
 
 <br>
 <p align="center">
-<a href="https://yoyo.xmcloud.buzz/">🪀 Preview the YoYoScore</a> |
+<a href="https://yoyo.xmcloud.buzz/">🪀 Preview the YoYoScore</a>
 
 </p>
 <br>
