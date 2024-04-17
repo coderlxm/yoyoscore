@@ -35,7 +35,7 @@ feature:
   4. Implement the function of sorting scores in ascending and descending order
   5. Added sound effects and vibration functions
 
-Inspired by [YoClicker]
+Inspired by [YoClicker] A WeChat mini Program.
 
 ## Thanks for the support of these open source projects 
 - [Vue.js](https://github.com/vuejs/) - aliasing utilities, dynamically.
