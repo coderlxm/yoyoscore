@@ -57,7 +57,7 @@ const toResult = () => {
 </template>
 <style>
 .full {
-  min-height: 90vh;
+  min-height: 91vh;
 }
 
 .button-grid {
