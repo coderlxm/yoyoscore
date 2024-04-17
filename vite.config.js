@@ -27,7 +27,7 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
-        theme_color: '#4DBA87',
+        theme_color: '#f01654',
         icons: [
           {
             src: 'YoYoScore.webp', // 相对于 public 目录
