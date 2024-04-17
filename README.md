@@ -44,7 +44,6 @@ Inspired by [YoClicker]
 - [Vite](https://github.com/vitejs/vite) - Next Generation Frontend Tooling.
 - [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa) - Zero-config PWA Framework-agnostic Plugin for Vite.
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=antfu.unocss)
-- Code-splitting for CSS - ships minimal CSS for MPA.
 
 ## License
 
