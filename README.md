@@ -19,7 +19,7 @@ A more elegant and beautiful Clicker that supports PWA offline use
 
 ## Features
 1.1 is released !
-feature:
+features:
   1. Added PWA independent application support, which can run without network environment
   2. Added confirmation prompt for deleting grade group
   3. Added night mode switching feature.
@@ -28,7 +28,7 @@ feature:
   6. Add static resources such as high-definition icons
 
 1.0 is released !
-feature:
+features:
   1. Implement scoring and recording functions
   2. Implement the function of grouping by competition
   3. Implement local persistence of data
@@ -38,8 +38,8 @@ feature:
 Inspired by [YoClicker] A WeChat mini Program.
 
 ## Thanks for the support of these open source projects 
-- [Vue.js](https://github.com/vuejs/) - aliasing utilities, dynamically.
-- [UnoCSS](https://unocss.dev/) - aliasing utilities, dynamically.
+- [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework.
+- [UnoCSS](https://unocss.dev/) - Aliasing utilities, dynamically.
 - [Vant 4](https://github.com/youzan/vant/) - A lightweight, customizable Vue UI library for mobile web apps.
 - [Vite](https://github.com/vitejs/vite) - Next Generation Frontend Tooling.
 - [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa) - Zero-config PWA Framework-agnostic Plugin for Vite.
