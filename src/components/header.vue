@@ -41,7 +41,6 @@ const computedTitleStyle = computed(() => {
 })
 
 window.addEventListener('resize', () => {
-  console.log('123');
   innerWidth.value = window.innerWidth
   innerHeight.value = window.innerHeight
 });
