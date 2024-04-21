@@ -18,6 +18,11 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
+1.1.1 is released !
+features:
+  1. Keyboard(+/-) trigger has been supported.
+  2. fixed keyboard-support button status on desktop.
+
 1.1 is released !
 features:
   1. Added PWA independent application support, which can run without network environment
