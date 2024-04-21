@@ -30,6 +30,7 @@ export const useSettingStore = defineStore('setting', {
         this.settingForm.keyboard = false
       } else {
         this.deviceType = 'desktop';
+        this.settingForm.keyboard = true
       }
     },
     changeBtnOrder() {
