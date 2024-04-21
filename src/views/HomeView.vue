@@ -1,12 +1,13 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { onUnmounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 
 const { settingForm, btnOrder } = storeToRefs(useSettingStore())
 const router = useRouter()
+const route = useRoute()
 const toSetting = () => {
   router.push({ name: 'setting' })
 }
@@ -18,7 +19,28 @@ const toRecord = () => {
 const toResult = () => {
   router.push({ name: 'result' })
 }
-
+const handleKeydown = (event) => {
+  switch (event.code) {
+    case 'Equal': // 主键区的 '=' 键
+      store.sum('add')
+      break;
+    case 'Minus': // 主键区的 '-' 键
+      store.sum()
+      break;
+    case 'NumpadAdd': // 小键盘的 '+' 键
+      store.sum('add')
+      break;
+    case 'NumpadSubtract': // 小键盘的 '-' 键
+      store.sum()
+      break;
+  }
+}
+if (route.name === 'home' && settingForm.value.keyboard === true) {
+  window.addEventListener('keydown', handleKeydown)
+}
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>

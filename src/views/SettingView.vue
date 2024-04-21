@@ -9,6 +9,7 @@ const back = () => {
 }
 const triggerMode = ref(1)
 const audioSw = ref('1')
+const keyboardSw = ref(true)
 const vibSw = ref('2')
 const vibMethod = ref('2')
 const sortBy = ref('1')
@@ -17,6 +18,7 @@ audioSw.value = store.$state.settingForm.audio
 sortBy.value = store.$state.settingForm.sort
 vibSw.value = store.$state.settingForm.vibrate
 vibMethod.value = store.$state.settingForm.vibMethod
+keyboardSw.value = store.$state.settingForm.keyboard
 const onSubmit = (values) => {
   store.$patch({ settingForm: values })
   router.push({ name: 'home' })
@@ -25,7 +27,7 @@ const onSubmit = (values) => {
 // if (!('vibrate' in navigator)) isSupportVib.value = false
 </script>
 <template>
-  <van-form ref="formRef" class="mt-13" colon label-width="25vw" @submit="onSubmit">
+  <van-form ref="formRef" class="mt-13" colon label-width="35vw" @submit="onSubmit">
     <div class="item-border mb-8">
       <div class="ml-4 mb-2">除+、-按钮外的按钮触发方式</div>
       <van-field name="trigger" label="按钮触发方式">
@@ -75,6 +77,19 @@ const onSubmit = (values) => {
             <van-radio checked-color="#f01654" name="0">升序</van-radio>
             <van-radio checked-color="#f01654" name="1">降序</van-radio>
           </van-radio-group>
+        </template>
+      </van-field>
+    </div>
+    <div class="item-border mb-8">
+      <div class="ml-4 mb-2">是否开启键盘触发(仅支持非移动端设备)</div>
+      <van-field name="keyboard" label="使用键盘的 +、- 控制">
+        <template #input>
+          <!-- <van-radio-group :disabled="store.deviceType === 'mobile'" direction="horizontal" v-model="keyboardSw">
+            <van-radio checked-color="#f01654" name="0">开启</van-radio>
+            <van-radio checked-color="#f01654" name="1">关闭</van-radio>
+          </van-radio-group> -->
+          <van-switch :disabled="store.deviceType === 'mobile'" v-model="keyboardSw" active-color="#f01654"
+            inactive-color="#dcdee0" />
         </template>
       </van-field>
     </div>

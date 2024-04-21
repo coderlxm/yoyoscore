@@ -7,7 +7,7 @@ const route = useRoute()
 const changeTheme = (value) => {
   store.$state.darkTheme = value
 }
-
+store.platformPre()
 </script>
 
 <template>
