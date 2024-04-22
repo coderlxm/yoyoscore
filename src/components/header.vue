@@ -1,6 +1,8 @@
 <script setup>
 import { useSettingStore } from '@/stores/setting';
-
+import { useRoute } from "vue-router";
+import { computed, ref, watchEffect } from "vue";
+const route = useRoute()
 const store = useSettingStore()
 const toggleFullScreen = () => {
   if (!document.fullscreenElement) {
@@ -21,17 +23,40 @@ const toggle = () => {
   const currentTheme = props.currentTheme === 'light' ? 'dark' : 'light'
   emit('changeTheme', currentTheme)
 }
+const toggleLayout = () => {
+  store.changeBtnOrder()
+}
+const innerWidth = ref(window.innerWidth)
+const innerHeight = ref(window.innerHeight)
+const computedSize = computed(() => {
+  const aspectRatio = innerWidth.value / innerHeight.value
+  // console.log(aspectRatio);
+  return aspectRatio < (9 / 16) ? 'mini' : 'small'
+})
+const computedTitleStyle = computed(() => {
+  return {
+    'color': store.$state.darkTheme === 'dark' ? '#ffffff' : '#f01654',
+    'font-size': computedSize.value === 'mini' ? '5vw' : '2vw'
+  }
+})
+
+window.addEventListener('resize', () => {
+  innerWidth.value = window.innerWidth
+  innerHeight.value = window.innerHeight
+});
 </script>
 <template>
-  <div class="flex justify-between items-center h-5vh mb-2 pt-12">
-    <div>
+  <div class="flex justify-between items-center h-5vh pt-9">
+    <div class="flex flex-1">
       <i></i>
-      <span :style="{ color: store.$state.darkTheme === 'dark' ? '#ffffff' : '#f01654' }"
-        class="font-size-6 font-700">YoYoScore</span>
+      <span :style="computedTitleStyle" class="font-700">YoYoScore</span>
     </div>
-    <div class="flex gap2">
-      <van-button color="#f01654" size="small" @click="toggleFullScreen">切换全屏</van-button>
-      <van-button color="#f01654" size="small" @click="toggle">{{ store.$state.darkTheme === 'dark' ? '黑夜' : '白天'
+    <div class="flex gap-1">
+      <van-button color="#f01654" :disabled="route.name !== 'home'" :size="computedSize"
+        @click="toggleLayout">切换布局</van-button>
+      <van-button color="#f01654" :size="computedSize" @click="toggleFullScreen">切换全屏</van-button>
+      <van-button color="#f01654" :size="computedSize" @click="toggle">{{ store.$state.darkTheme === 'dark' ? '黑夜' :
+        '白天'
         }}</van-button>
     </div>
   </div>
