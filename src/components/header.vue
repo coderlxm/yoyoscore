@@ -31,7 +31,7 @@ const innerHeight = ref(window.innerHeight)
 const computedSize = computed(() => {
   const aspectRatio = innerWidth.value / innerHeight.value
   // console.log(aspectRatio);
-  return aspectRatio < (9 / 16) ? 'mini' : 'small'
+  return aspectRatio <= (9 / 14) ? 'mini' : 'small'
 })
 const computedTitleStyle = computed(() => {
   return {
