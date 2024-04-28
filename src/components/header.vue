@@ -1,7 +1,8 @@
 <script setup>
 import { useSettingStore } from '@/stores/setting';
 import { useRoute } from "vue-router";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
+import { Icon } from '@iconify/vue';
 const route = useRoute()
 const store = useSettingStore()
 const toggleFullScreen = () => {
@@ -47,8 +48,8 @@ window.addEventListener('resize', () => {
 </script>
 <template>
   <div class="flex justify-between items-center h-5vh pt-9">
-    <div class="flex flex-1">
-      <i></i>
+    <div class="flex flex-1 items-center gap-2">
+      <Icon class="font-size-8" style="color: #f01654;" icon="noto:yo-yo" />
       <span :style="computedTitleStyle" class="font-700">YoYoScore</span>
     </div>
     <div class="flex gap-1">
