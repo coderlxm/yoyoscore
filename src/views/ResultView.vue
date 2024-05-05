@@ -6,6 +6,8 @@ import { useRecordStore } from "@/stores/record";
 import resultTable from "@/components/resultTable.vue"
 import { showConfirmDialog } from 'vant';
 import { useSettingStore } from "@/stores/setting";
+// import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 const isEditMode = ref(false)
 // 默认为1 总分模式1 计数模式0
 const scoreMode = ref(1)
@@ -20,11 +22,7 @@ const del = (item) => {
   recordStore.$state.recordedGames.splice(itemAtIndex, 1)
 }
 const toggleScoreMode = () => {
-  if (scoreMode.value === 0) {
-    scoreMode.value = 1
-  } else {
-    scoreMode.value = 0
-  }
+  scoreMode.value === 0 ? scoreMode.value = 1 : scoreMode.value = 0
 }
 const router = useRouter()
 const back = () => {
@@ -51,6 +49,111 @@ const delGame = (item) => {
       // on cancel
     });
 }
+const exportResults = () => {
+  const gameData = Object.values(recordStore.recordGroupedAndRanked).map((item, index) => {
+    return {
+      data: item.map((item2, index) => {
+        return {
+          name: item2.name,
+          score: store.dealScoreDisplay({ scoreMode: 'full', results: item }, item2),
+          rank: useSettingStore().settingForm.sort === '1' ? index + 1 : item.length -
+            index,
+        }
+      })
+    }
+  })
+  const tables = Object.keys(recordStore.recordGroupedAndRanked).map((item, index) => {
+    return {
+      title: item,
+      headers: [["选手姓名", "得分", "排名"]],
+      ...gameData[index]
+    }
+  })
+  // 为所有单元格添加边框样式的函数
+  const addBorders = (row) => {
+    row.eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+      cell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      };
+    });
+  };
+  // 创建 Excel 文件
+  const createExcelFile = async (filename) => {
+    const workbook = new ExcelJS.Workbook();
+
+    tables.forEach(table => {
+      const worksheet = workbook.addWorksheet(table.title || ' ');
+
+      // 添加标题
+      worksheet.mergeCells('A1', 'C1');
+      const titleCell = worksheet.getCell('A1');
+      titleCell.value = table.title || 'Unknown Title';
+      titleCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
+      titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+      titleCell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'F01654' }
+      };
+
+      // 设置标题单元格的行高
+      worksheet.getRow(1).height = 40;
+      addBorders(worksheet.getRow(1)); // 为标题行添加边框
+
+      // 添加空行
+      // worksheet.addRow([]);
+
+      // 添加表头
+      const headers = table.headers[0];
+      const headerRow = worksheet.addRow(headers);
+      headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      headerRow.alignment = { horizontal: 'center', vertical: 'middle' };
+      headerRow.height = 22.5; // 默认行高的1.5倍（15 * 1.5）
+      headerRow.eachCell((cell) => {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'F01654' }
+        };
+        cell.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
+        };
+      });
+      addBorders(headerRow); // 为表头行添加边框
+      // 设置选手姓名列的宽度为默认宽度的2倍
+      worksheet.getColumn(1).width = 15;
+      worksheet.getColumn(2).width = 20;
+      worksheet.getColumn(3).width = 5;
+      // 添加数据
+      table.data.forEach(item => {
+        const dataRow = Object.values(item);
+        const row = worksheet.addRow(dataRow);
+        addBorders(row); // 为数据行添加边框
+      });
+    });
+
+    // 导出 Excel 文件
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  };
+
+  // 导出 Excel
+  createExcelFile('比赛成绩表.xlsx');
+}
 watchEffect(() => {
   if (useSettingStore().darkTheme === 'dark') {
     document.documentElement.style.setProperty(
@@ -64,8 +167,11 @@ watchEffect(() => {
 </script>
 <template>
   <div class="flex gap-3 mb-5 w-full mt-8">
-    <van-button class="flex-1" @click="toggleScoreMode" size="small" plain color="#f01654">切换分数显示模式</van-button>
-    <van-button class="flex-1" @click="edit" size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑' }}</van-button>
+    <van-button plain class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">切换分数显示模式</van-button>
+    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" class="flex-1"
+      @click="exportResults" size="small" color="#f01654">导出比赛成绩</van-button>
+    <van-button plain class="flex-1" @click="edit" size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑'
+      }}</van-button>
   </div>
   <van-collapse v-model="store.$state.activeNames">
     <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">

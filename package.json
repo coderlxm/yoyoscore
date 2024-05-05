@@ -15,6 +15,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "exceljs": "^4.4.0",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
