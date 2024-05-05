@@ -54,7 +54,7 @@ const exportResults = () => {
     return {
       data: item.map((item2, index) => {
         return {
-          name: item2.name,
+          name: item2.name || '-',
           score: store.dealScoreDisplay({ scoreMode: 'full', results: item }, item2),
           rank: useSettingStore().settingForm.sort === '1' ? index + 1 : item.length -
             index,
@@ -131,13 +131,14 @@ const exportResults = () => {
       });
       addBorders(headerRow); // 为表头行添加边框
       // 设置选手姓名列的宽度为默认宽度的2倍
-      worksheet.getColumn(1).width = 15;
-      worksheet.getColumn(2).width = 20;
-      worksheet.getColumn(3).width = 5;
+      worksheet.getColumn(1).width = 20;
+      worksheet.getColumn(2).width = 25;
+      worksheet.getColumn(3).width = 10;
       // 添加数据
       table.data.forEach(item => {
         const dataRow = Object.values(item);
         const row = worksheet.addRow(dataRow);
+        row.height = 17.5
         addBorders(row); // 为数据行添加边框
       });
     });
