@@ -18,6 +18,12 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
+1.2 is released !
+features:
+  1. Results can be exported to xlsx.
+  2. The method of audioPlay was optimized.
+  3. nginx config updated (about cache-control).
+  
 1.1.1 is released !
 features:
   1. Keyboard(+/-) trigger has been supported.
