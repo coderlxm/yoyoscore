@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from "@/stores/setting";
+import { Icon } from '@iconify/vue';
 const router = useRouter()
 const store = useSettingStore()
 const back = () => {
@@ -95,10 +96,16 @@ const onSubmit = (values) => {
     </div>
     <div class="grid gap-5">
       <van-button color="#f01654" round block type="primary" native-type="submit">
-        保存设置
+        <div class="flex items-center gap-1">
+          <Icon class="font-size-5" icon="material-symbols:save" />
+          保存设置
+        </div>
       </van-button>
       <van-button color="#f01654" @click="back" round block plain type="primary">
-        返回
+        <div class="flex items-center gap-1">
+          <Icon class="font-size-5" icon="mingcute:back-fill" />
+          返回
+        </div>
       </van-button>
     </div>
     <!-- <div class="flex flex-col items-end gap-2 color-#f01654 mt-5">

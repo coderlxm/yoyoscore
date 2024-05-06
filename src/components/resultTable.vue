@@ -2,11 +2,14 @@
 import { useResultStore } from "@/stores/result";
 import { useSettingStore } from "@/stores/setting";
 const props = defineProps(['results', 'isEditMode', 'scoreMode'])
-const emit = defineEmits(['del'])
+const emit = defineEmits(['del', 'toast'])
 const settingStore = useSettingStore()
 const store = useResultStore()
 const delRecord = (item) => {
   emit('del', item)
+}
+const showRepToast = () => {
+  emit('toast')
 }
 </script>
 <template>
@@ -22,8 +25,12 @@ const delRecord = (item) => {
     <tbody>
       <tr v-for="(item, index) in props.results" :key="item.game" class="w-full flex items-center justify-between">
         <td class="w-24vw text-center">
-          <span>{{ item.name ? item.name : '--' }}</span>
-          <span>{{ item.name ? item.name : '--' }}</span>
+          <div class="flex items-center justify-center gap-1">
+            <van-tag
+              v-if="props.results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1"
+              plain color="#f01654">重复</van-tag>
+            <span>{{ item.name ? item.name : '--' }}</span>
+          </div>
         </td>
         <td class="w-24vw text-center">
           <!-- <span>{{ props.scoreMode === 1 ? ((item.sumScore / props.results[0].sumScore) * 100).toFixed(2) :

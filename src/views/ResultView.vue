@@ -6,6 +6,7 @@ import { useRecordStore } from "@/stores/record";
 import resultTable from "@/components/resultTable.vue"
 import { showConfirmDialog } from 'vant';
 import { useSettingStore } from "@/stores/setting";
+import { Icon } from '@iconify/vue';
 // import * as XLSX from 'xlsx';
 import ExcelJS from 'exceljs';
 const isEditMode = ref(false)
@@ -172,12 +173,20 @@ watchEffect(() => {
 </script>
 <template>
   <div class="flex gap-3 mb-5 w-full mt-8">
-    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="toggleScoreMode" size="small"
-      color="#f01654">切换分数显示模式</van-button>
+    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />切换分数显示模式
+      </div>
+    </van-button>
     <!-- <van-button plain class="flex-1" @click="" size="small" color="#f01654">添加比赛</van-button> -->
-    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="edit" size="small" color="#f01654">{{
-      isEditMode ? '退出编辑' : '编辑'
-    }}</van-button>
+    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="edit" size="small" color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon icon="uil:edit" class="font-size-5" />
+        {{
+          isEditMode ? '退出编辑' : '编辑'
+        }}
+      </div>
+    </van-button>
   </div>
   <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
     style="height: 69vh;overflow-y: auto;">
@@ -205,10 +214,17 @@ watchEffect(() => {
     </van-empty>
   </div>
   <div class="grid gap-4 mt-4">
-    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block
-      color="#f01654">导出比赛成绩为Excel表格</van-button>
+    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="entypo:export" />
+        导出比赛成绩为Excel表格
+      </div>
+    </van-button>
     <van-button color="#f01654" @click="back" round block plain>
-      返回
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="mingcute:back-fill" />
+        返回
+      </div>
     </van-button>
   </div>
 </template>

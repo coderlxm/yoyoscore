@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import { useRecordStore } from "@/stores/record";
 import { useScoreStore } from "@/stores/score";
 import { storeToRefs } from "pinia";
+import { Icon } from '@iconify/vue';
 const router = useRouter()
 const back = () => {
   router.push({ name: 'home' })
@@ -65,10 +66,16 @@ const chooseThisTag = (item) => {
     </van-collapse>
     <div style="margin: 16px;" class="grid gap-5">
       <van-button color="#f01654" @click="save" round block type="primary">
-        保存
+        <div class="flex items-center gap-1">
+          <Icon class="font-size-5" icon="material-symbols:save" />
+          保存
+        </div>
       </van-button>
-      <van-button color="#f01654" @click="back" round block plain type="primary">
-        返回
+      <van-button color="#f01654" @click="back" round block plain>
+        <div class="flex items-center gap-1">
+          <Icon class="font-size-5" icon="mingcute:back-fill" />
+          返回
+        </div>
       </van-button>
     </div>
   </div>
