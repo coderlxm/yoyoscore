@@ -94,7 +94,7 @@ const exportResults = () => {
       // 添加标题
       worksheet.mergeCells('A1', 'C1');
       const titleCell = worksheet.getCell('A1');
-      titleCell.value = table.title || 'Unknown Title';
+      titleCell.value = table.title || ' ';
       titleCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
       titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
       titleCell.fill = {
@@ -168,9 +168,7 @@ watchEffect(() => {
 </script>
 <template>
   <div class="flex gap-3 mb-5 w-full mt-8">
-    <van-button plain class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">切换分数显示模式</van-button>
-    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" class="flex-1"
-      @click="exportResults" size="small" color="#f01654">导出比赛成绩</van-button>
+    <van-button class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">切换分数显示模式</van-button>
     <van-button plain class="flex-1" @click="edit" size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑'
       }}</van-button>
   </div>
@@ -194,7 +192,9 @@ watchEffect(() => {
       </van-cell-group>
     </van-collapse-item> -->
   </van-collapse>
-  <div class="mt-4">
+  <div class="grid gap-4 mt-4">
+    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" @click="exportResults" round block
+      color="#f01654">导出比赛成绩为Excel表格</van-button>
     <van-button color="#f01654" @click="back" round block plain>
       返回
     </van-button>
