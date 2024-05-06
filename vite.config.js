@@ -20,7 +20,11 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt'], // 静态资源列表
+      includeAssets: ['favicon.ico', 'YoYoScore.webp'], // 静态资源列表
+      srcDir: 'src',
+      filename: 'service-worker.js',
+      strategies: 'injectManifest',
+      injectRegister: 'auto',
       manifest: {
         name: 'YoYoScore',
         short_name: 'YoYoScore',
@@ -43,6 +47,15 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
