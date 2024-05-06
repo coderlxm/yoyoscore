@@ -21,7 +21,10 @@ const delRecord = (item) => {
     </thead>
     <tbody>
       <tr v-for="(item, index) in props.results" :key="item.game" class="w-full flex items-center justify-between">
-        <td class="w-24vw text-center">{{ item.name ? item.name : '--' }}</td>
+        <td class="w-24vw text-center">
+          <span>{{ item.name ? item.name : '--' }}</span>
+          <span>{{ item.name ? item.name : '--' }}</span>
+        </td>
         <td class="w-24vw text-center">
           <!-- <span>{{ props.scoreMode === 1 ? ((item.sumScore / props.results[0].sumScore) * 100).toFixed(2) :
             `${item.pointadd}-${item.pointmin}`
