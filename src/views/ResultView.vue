@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useResultStore } from "@/stores/result";
 import { useRecordStore } from "@/stores/record";
@@ -50,6 +50,9 @@ const delGame = (item) => {
       // on cancel
     });
 }
+const isNotEmptyResults = computed(() => {
+  return Object.keys(recordStore.recordGroupedAndRanked).length
+})
 const exportResults = () => {
   const gameData = Object.values(recordStore.recordGroupedAndRanked).map((item) => {
     return {
@@ -169,16 +172,16 @@ watchEffect(() => {
 </script>
 <template>
   <div class="flex gap-3 mb-5 w-full mt-8">
-    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" class="flex-1"
-      @click="toggleScoreMode" size="small" color="#f01654">切换分数显示模式</van-button>
-    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" plain class="flex-1" @click="edit"
-      size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑'
-      }}</van-button>
+    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="toggleScoreMode" size="small"
+      color="#f01654">切换分数显示模式</van-button>
+    <!-- <van-button plain class="flex-1" @click="" size="small" color="#f01654">添加比赛</van-button> -->
+    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="edit" size="small" color="#f01654">{{
+      isEditMode ? '退出编辑' : '编辑'
+    }}</van-button>
   </div>
-  <div
-    :class="{ 'flex': true, 'flex-col': true, 'justify-center': !Object.keys(recordStore.recordGroupedAndRanked).length }"
-    style="height: 68vh;overflow-y: auto;">
-    <van-collapse v-show="Object.keys(recordStore.recordGroupedAndRanked).length" v-model="store.$state.activeNames">
+  <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
+    style="height: 69vh;overflow-y: auto;">
+    <van-collapse v-show="isNotEmptyResults" v-model="store.$state.activeNames">
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
           <div class="flex justify-between items-center">
@@ -198,10 +201,11 @@ watchEffect(() => {
       </van-cell-group>
     </van-collapse-item> -->
     </van-collapse>
-    <van-empty v-show="!Object.keys(recordStore.recordGroupedAndRanked).length" description="暂无已记录成绩" />
+    <van-empty v-show="!isNotEmptyResults" description="暂无成绩，你可以开始记录">
+    </van-empty>
   </div>
   <div class="grid gap-4 mt-4">
-    <van-button :disabled="!Object.keys(recordStore.recordGroupedAndRanked).length" @click="exportResults" round block
+    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block
       color="#f01654">导出比赛成绩为Excel表格</van-button>
     <van-button color="#f01654" @click="back" round block plain>
       返回
