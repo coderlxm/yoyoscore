@@ -20,7 +20,6 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'YoYoScore.webp'], // 静态资源列表
       srcDir: 'src',
       filename: 'service-worker.js',
       strategies: 'injectManifest',
@@ -34,12 +33,12 @@ export default defineConfig({
         theme_color: '#f01654',
         icons: [
           {
-            src: 'YoYoScore.webp', // 相对于 public 目录
+            src: 'YoYoScoreNew.webp', // 相对于 public 目录
             sizes: '192x192',
             type: 'image/webp'
           },
           {
-            src: 'YoYoScore.webp', // 相对于 public 目录
+            src: 'YoYoScoreNew.webp', // 相对于 public 目录
             sizes: '512x512',
             type: 'image/webp'
           }

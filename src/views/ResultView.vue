@@ -172,7 +172,7 @@ watchEffect(() => {
 })
 </script>
 <template>
-  <div class="flex gap-3 mb-5 w-full mt-8">
+  <div class="flex gap-3 mb-5 w-full mt-7">
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">
       <div class="flex items-center gap-1">
         <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />切换分数显示模式

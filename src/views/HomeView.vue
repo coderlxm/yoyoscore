@@ -1,5 +1,5 @@
 <script setup>
-import { onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
@@ -13,6 +13,7 @@ const toSetting = () => {
 }
 
 const store = useScoreStore()
+store.preloadAudio()
 const toRecord = () => {
   router.push({ name: 'record' })
 }
@@ -38,6 +39,7 @@ const handleKeydown = (event) => {
 if (route.name === 'home' && settingForm.value.keyboard === true) {
   window.addEventListener('keydown', handleKeydown)
 }
+
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
 })
