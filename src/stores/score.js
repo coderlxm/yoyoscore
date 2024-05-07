@@ -18,6 +18,7 @@ export const useScoreStore = defineStore('score', {
     preloadAudio() {
       // 在 Store 初始化时预加载音效
       this.keyDownAudio = new Audio(keyDownAudio);
+      this.keyDownAudio.preload = 'auto';
       this.keyDownAudio.load(); // 预加载音效数据
     },
     async sum(sumMode) {
