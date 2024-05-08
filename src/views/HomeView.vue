@@ -50,7 +50,7 @@ onUnmounted(() => {
     <van-button :style="{ order: btnOrder.orderTop }" @click="store.sum('add')" class="flex-1" plain color="#f01654">
       <div>
         <span class="font-700 font-size-20">+ 1</span>
-        <div class="font-size-6 mt-5">分数：{{ store.$state.pointadd }}</div>
+        <div class="font-size-6 mt-5">分数：{{ store.pointadd }}</div>
       </div>
     </van-button>
     <div :style="{ order: btnOrder.orderMedium }" class="flex flex-col gap-4">
@@ -94,7 +94,7 @@ onUnmounted(() => {
     <van-button :style="{ order: btnOrder.orderBottom }" @click="store.sum()" class="flex-1" color="#f01654">
       <div>
         <span class="font-700 font-size-20">- 1</span>
-        <div class="font-size-6 mt-5">扣分：{{ store.$state.pointmin }}</div>
+        <div class="font-size-6 mt-5">扣分：{{ store.pointmin }}</div>
       </div>
     </van-button>
   </div>

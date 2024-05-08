@@ -14,12 +14,12 @@ const keyboardSw = ref(true)
 const vibSw = ref('2')
 const vibMethod = ref('2')
 const sortBy = ref('1')
-triggerMode.value = store.$state.settingForm.trigger
-audioSw.value = store.$state.settingForm.audio
-sortBy.value = store.$state.settingForm.sort
-vibSw.value = store.$state.settingForm.vibrate
-vibMethod.value = store.$state.settingForm.vibMethod
-keyboardSw.value = store.$state.settingForm.keyboard
+triggerMode.value = store.settingForm.trigger
+audioSw.value = store.settingForm.audio
+sortBy.value = store.settingForm.sort
+vibSw.value = store.settingForm.vibrate
+vibMethod.value = store.settingForm.vibMethod
+keyboardSw.value = store.settingForm.keyboard
 const onSubmit = (values) => {
   store.$patch({ settingForm: values })
   router.push({ name: 'home' })

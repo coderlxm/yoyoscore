@@ -18,9 +18,9 @@ const edit = () => {
   isEditMode.value = !isEditMode.value
 }
 const del = (item) => {
-  const itemAtIndex = recordStore.$state.recordedGames.findIndex((record) => item.name === record.name)
+  const itemAtIndex = recordStore.recordedGames.findIndex((record) => item.name === record.name)
   // console.log(itemAtIndex);
-  recordStore.$state.recordedGames.splice(itemAtIndex, 1)
+  recordStore.recordedGames.splice(itemAtIndex, 1)
 }
 const toggleScoreMode = () => {
   scoreMode.value === 0 ? scoreMode.value = 1 : scoreMode.value = 0
@@ -190,7 +190,7 @@ watchEffect(() => {
   </div>
   <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
     style="height: 68vh;overflow-y: auto;">
-    <van-collapse v-show="isNotEmptyResults" v-model="store.$state.activeNames">
+    <van-collapse v-show="isNotEmptyResults" v-model="store.activeNames">
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
           <div class="flex justify-between items-center">
@@ -206,7 +206,7 @@ watchEffect(() => {
       </van-collapse-item>
       <!-- <van-collapse-item title="选手姓名" name="2">
       <van-cell-group inset>
-        <van-field v-model="store.$state.name" label="请输入" placeholder="选手姓名" />
+        <van-field v-model="store.name" label="请输入" placeholder="选手姓名" />
       </van-cell-group>
     </van-collapse-item> -->
     </van-collapse>

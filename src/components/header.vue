@@ -36,7 +36,7 @@ const computedSize = computed(() => {
 })
 const computedTitleStyle = computed(() => {
   return {
-    'color': store.$state.darkTheme === 'dark' ? '#ffffff' : '#f01654',
+    'color': store.darkTheme === 'dark' ? '#ffffff' : '#f01654',
     'font-size': computedSize.value === 'mini' ? '5vw' : '2vw'
   }
 })
@@ -56,7 +56,7 @@ window.addEventListener('resize', () => {
       <van-button color="#f01654" :disabled="route.name !== 'home'" :size="computedSize"
         @click="toggleLayout">切换布局</van-button>
       <van-button color="#f01654" :size="computedSize" @click="toggleFullScreen">切换全屏</van-button>
-      <van-button color="#f01654" :size="computedSize" @click="toggle">{{ store.$state.darkTheme === 'dark' ? '黑夜' :
+      <van-button color="#f01654" :size="computedSize" @click="toggle">{{ store.darkTheme === 'dark' ? '黑夜' :
         '白天'
         }}</van-button>
     </div>
