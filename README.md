@@ -18,6 +18,17 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
+1.2.1 is released !
+features:
+  1. Results page layout has been optimized.
+  2. the audio of +/- button will be preload before you enter the homepage
+
+1.2 is released !
+features:
+  1. Results can be exported to xlsx.
+  2. The method of audioPlay was optimized.
+  3. nginx config updated (about cache-control).
+  
 1.1.1 is released !
 features:
   1. Keyboard(+/-) trigger has been supported.
@@ -46,6 +57,7 @@ Inspired by [YoClicker] A WeChat mini Program.
 - [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework.
 - [UnoCSS](https://unocss.dev/) - Aliasing utilities, dynamically.
 - [Vant 4](https://github.com/youzan/vant/) - A lightweight, customizable Vue UI library for mobile web apps.
+- [Iconify](https://iconify.design/) - All popular icon sets, one framework.
 - [Vite](https://github.com/vitejs/vite) - Next Generation Frontend Tooling.
 - [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa) - Zero-config PWA Framework-agnostic Plugin for Vite.
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=antfu.unocss)
