@@ -18,6 +18,11 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
+1.2.1 is released !
+features:
+  1. Results page layout has been optimized.
+  2. the audio of +/- button will be preload before you enter the homepage
+
 1.2 is released !
 features:
   1. Results can be exported to xlsx.
