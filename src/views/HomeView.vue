@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
