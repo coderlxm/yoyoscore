@@ -56,7 +56,7 @@ onUnmounted(() => {
     <div :style="{ order: btnOrder.orderMedium }" class="flex flex-col gap-4">
       <div class="grid gap-3 button-grid">
         <van-button color="#f01654"
-          v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }">
+          v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1, duration: 1000 }">
           <div class="flex items-center gap-1">
             <Icon icon="icon-park-outline:clear" class="font-size-5" style="color: #fff;" />
             <span>{{
@@ -64,7 +64,7 @@ onUnmounted(() => {
           </div>
         </van-button>
         <van-button
-          v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1, duration: 1000 }"
           color="#f01654" plain>
           <div class="flex items-center gap-1">
             <Icon icon="jam:write" class="font-size-5" style="color: #f01654;" />
@@ -74,7 +74,7 @@ onUnmounted(() => {
       </div>
       <div class="grid gap-3 button-grid-2">
         <van-button
-          v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1, duration: 1000 }"
           plain color="#f01654">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="uil:setting" />
@@ -82,7 +82,7 @@ onUnmounted(() => {
           </div>
         </van-button>
         <van-button
-          v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1 ? true : false, duration: 1000 }"
+          v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1, duration: 1000 }"
           color="#f01654">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="carbon:result" />
