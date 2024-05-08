@@ -189,7 +189,7 @@ watchEffect(() => {
     </van-button>
   </div>
   <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
-    style="height: 69vh;overflow-y: auto;">
+    style="height: 68vh;overflow-y: auto;">
     <van-collapse v-show="isNotEmptyResults" v-model="store.$state.activeNames">
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
