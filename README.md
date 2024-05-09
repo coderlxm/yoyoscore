@@ -22,6 +22,7 @@ A more elegant and beautiful Clicker that supports PWA offline use
 features:
   1. Results page layout has been optimized.
   2. the audio of +/- button will be preload before you enter the homepage
+  3. keyboard event trigger has been debounced.
 
 1.2 is released !
 features:
