@@ -1,5 +1,5 @@
 <script setup>
-import { onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
@@ -20,7 +20,17 @@ const toRecord = () => {
 const toResult = () => {
   router.push({ name: 'result' })
 }
+const pressedKeys = {}
+const handleKeyup = (event) => {
+  // 当按键松开时，将其从按下状态中移除
+  delete pressedKeys[event.code];
+}
 const handleKeydown = (event) => {
+  if (pressedKeys[event.code]) {
+    // 如果按键已记录为按下状态，不再触发
+    return;
+  }
+  pressedKeys[event.code] = true;
   switch (event.code) {
     case 'Equal': // 主键区的 '=' 键
       store.sum('add')
@@ -36,12 +46,24 @@ const handleKeydown = (event) => {
       break;
   }
 }
-if (route.name === 'home' && settingForm.value.keyboard === true) {
-  window.addEventListener('keydown', handleKeydown)
-}
-
-onUnmounted(() => {
+// onMounted(() => {
+//   if (route.name === 'home' && settingForm.value.keyboard) {
+//     addKeyboardListeners();
+//   }
+// })
+const addKeyboardListeners = () => {
+  window.addEventListener('keydown', handleKeydown);
+  window.addEventListener('keyup', handleKeyup);
+};
+const removeKeyboardListeners = () => {
   window.removeEventListener('keydown', handleKeydown)
+  window.removeEventListener('keyup', handleKeyup)
+}
+if (route.name === 'home' && settingForm.value.keyboard) {
+  addKeyboardListeners();
+}
+onUnmounted(() => {
+  removeKeyboardListeners()
 })
 </script>
 
