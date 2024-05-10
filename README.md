@@ -1,7 +1,7 @@
 <br>
 
 <p align="center">
-<img src="https://yoyo.xmcloud.buzz/YoYoScore.webp" style="width:100px;" />
+<img src="https://yoyo.xmcloud.buzz/YoYoScoreNew.webp" style="width:100px;" />
 </p>
 
 <h1 align="center">YoYoScore</h1>
