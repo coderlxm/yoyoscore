@@ -1,11 +1,14 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useResultStore } from "@/stores/result";
 import { useRecordStore } from "@/stores/record";
 import resultTable from "@/components/resultTable.vue"
 import { showConfirmDialog } from 'vant';
 import { useSettingStore } from "@/stores/setting";
+import { Icon } from '@iconify/vue';
+// import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 const isEditMode = ref(false)
 // 默认为1 总分模式1 计数模式0
 const scoreMode = ref(1)
@@ -15,16 +18,12 @@ const edit = () => {
   isEditMode.value = !isEditMode.value
 }
 const del = (item) => {
-  const itemAtIndex = recordStore.$state.recordedGames.findIndex((record) => item.name === record.name)
+  const itemAtIndex = recordStore.recordedGames.findIndex((record) => item.name === record.name)
   // console.log(itemAtIndex);
-  recordStore.$state.recordedGames.splice(itemAtIndex, 1)
+  recordStore.recordedGames.splice(itemAtIndex, 1)
 }
 const toggleScoreMode = () => {
-  if (scoreMode.value === 0) {
-    scoreMode.value = 1
-  } else {
-    scoreMode.value = 0
-  }
+  scoreMode.value === 0 ? scoreMode.value = 1 : scoreMode.value = 0
 }
 const router = useRouter()
 const back = () => {
@@ -46,10 +45,120 @@ const delGame = (item) => {
       //   }
       // })
       recordStore.recordedGames = recordStore.recordedGames.filter((record) => item[0].game !== record.game)
+      if (recordStore.recordedGames.length === 0) isEditMode.value = false
     })
     .catch(() => {
       // on cancel
     });
+}
+const isNotEmptyResults = computed(() => {
+  return Object.keys(recordStore.recordGroupedAndRanked).length
+})
+const exportResults = () => {
+  const gameData = Object.values(recordStore.recordGroupedAndRanked).map((item) => {
+    return {
+      data: item.map((item2, index) => {
+        return {
+          name: item2.name || '-',
+          score: store.dealScoreDisplay({ scoreMode: 'full', results: item }, item2),
+          rank: useSettingStore().settingForm.sort === '1' ? index + 1 : item.length -
+            index,
+        }
+      })
+    }
+  })
+  const tables = Object.keys(recordStore.recordGroupedAndRanked).map((item, index) => {
+    return {
+      title: item,
+      headers: [["选手姓名", "得分", "排名"]],
+      ...gameData[index]
+    }
+  })
+  // 为所有单元格添加边框样式的函数
+  const addBorders = (row) => {
+    row.eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+      cell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      };
+    });
+  };
+  // 创建 Excel 文件
+  const createExcelFile = async (filename) => {
+    const workbook = new ExcelJS.Workbook();
+
+    tables.forEach(table => {
+      const worksheet = workbook.addWorksheet(table.title || ' ');
+
+      // 添加标题
+      worksheet.mergeCells('A1', 'C1');
+      const titleCell = worksheet.getCell('A1');
+      titleCell.value = table.title || ' ';
+      titleCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
+      titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+      titleCell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'F01654' }
+      };
+
+      // 设置标题单元格的行高
+      worksheet.getRow(1).height = 40;
+      addBorders(worksheet.getRow(1)); // 为标题行添加边框
+
+      // 添加空行
+      // worksheet.addRow([]);
+
+      // 添加表头
+      const headers = table.headers[0];
+      const headerRow = worksheet.addRow(headers);
+      headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      headerRow.alignment = { horizontal: 'center', vertical: 'middle' };
+      headerRow.height = 22.5; // 默认行高的1.5倍（15 * 1.5）
+      headerRow.eachCell((cell) => {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'F01654' }
+        };
+        cell.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
+        };
+      });
+      addBorders(headerRow); // 为表头行添加边框
+      // 设置选手姓名列的宽度为默认宽度的2倍
+      worksheet.getColumn(1).width = 20;
+      worksheet.getColumn(2).width = 25;
+      worksheet.getColumn(3).width = 10;
+      // 添加数据
+      table.data.forEach(item => {
+        const dataRow = Object.values(item);
+        const row = worksheet.addRow(dataRow);
+        row.height = 17.5
+        addBorders(row); // 为数据行添加边框
+      });
+    });
+
+    // 导出 Excel 文件
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  };
+
+  // 导出 Excel
+  createExcelFile('比赛成绩表.xlsx');
 }
 watchEffect(() => {
   if (useSettingStore().darkTheme === 'dark') {
@@ -63,33 +172,59 @@ watchEffect(() => {
 })
 </script>
 <template>
-  <div class="flex gap-3 mb-5 w-full mt-8">
-    <van-button class="flex-1" @click="toggleScoreMode" size="small" plain color="#f01654">切换分数显示模式</van-button>
-    <van-button class="flex-1" @click="edit" size="small" color="#f01654">{{ isEditMode ? '退出编辑' : '编辑' }}</van-button>
+  <div class="flex gap-3 mb-5 w-full mt-7">
+    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="toggleScoreMode" size="small" color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />切换分数显示模式
+      </div>
+    </van-button>
+    <!-- <van-button plain class="flex-1" @click="" size="small" color="#f01654">添加比赛</van-button> -->
+    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="edit" size="small" color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon icon="uil:edit" class="font-size-5" />
+        {{
+          isEditMode ? '退出编辑' : '编辑'
+        }}
+      </div>
+    </van-button>
   </div>
-  <van-collapse v-model="store.$state.activeNames">
-    <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
-      <template #title>
-        <div class="flex justify-between items-center">
-          <div class="pr-2 flex flex-1 justify-between font-700 font-size-4 color-#f01654">
-            <div>比赛名称</div>
-            <div>{{ key }}</div>
+  <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
+    style="height: 68vh;overflow-y: auto;">
+    <van-collapse v-show="isNotEmptyResults" v-model="store.activeNames">
+      <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
+        <template #title>
+          <div class="flex justify-between items-center">
+            <div class="pr-2 flex flex-1 justify-between font-700 font-size-4 color-#f01654">
+              <div>比赛名称</div>
+              <div>{{ key }}</div>
+            </div>
+            <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
+                color="#f01654">删除</van-button></div>
           </div>
-          <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
-              color="#f01654">删除</van-button></div>
-        </div>
-      </template>
-      <result-table @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode" :results="item"></result-table>
-    </van-collapse-item>
-    <!-- <van-collapse-item title="选手姓名" name="2">
+        </template>
+        <result-table @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode" :results="item"></result-table>
+      </van-collapse-item>
+      <!-- <van-collapse-item title="选手姓名" name="2">
       <van-cell-group inset>
-        <van-field v-model="store.$state.name" label="请输入" placeholder="选手姓名" />
+        <van-field v-model="store.name" label="请输入" placeholder="选手姓名" />
       </van-cell-group>
     </van-collapse-item> -->
-  </van-collapse>
-  <div class="mt-4">
+    </van-collapse>
+    <van-empty v-show="!isNotEmptyResults" description="暂无成绩，你可以开始记录">
+    </van-empty>
+  </div>
+  <div class="grid gap-4 mt-4">
+    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block color="#f01654">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="entypo:export" />
+        导出比赛成绩为Excel表格
+      </div>
+    </van-button>
     <van-button color="#f01654" @click="back" round block plain>
-      返回
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="mingcute:back-fill" />
+        返回
+      </div>
     </van-button>
   </div>
 </template>

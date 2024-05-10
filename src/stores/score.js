@@ -7,6 +7,7 @@ export const useScoreStore = defineStore('score', {
   state: () => ({
     pointadd: 0,
     pointmin: 0,
+    keyDownAudio: null,
     cont: { name: '', score: 0, rank: 0 },
     contInfo: []
   }),
@@ -14,10 +15,23 @@ export const useScoreStore = defineStore('score', {
     computedScore: (state) => state.pointadd - state.pointmin
   },
   actions: {
-    sum(sumMode) {
-      const keydownAudio = new Audio(keyDownAudio)
+    preloadAudio() {
+      // 在 Store 初始化时预加载音效
+      this.keyDownAudio = new Audio(keyDownAudio);
+      this.keyDownAudio.preload = 'auto';
+      this.keyDownAudio.load(); // 预加载音效数据
+    },
+    async sum(sumMode) {
       const { settingForm } = storeToRefs(useSettingStore())
-      if (settingForm.value.audio === '1') keydownAudio.play()
+      // console.log(this.keyDownAudio.play());
+      if (this.keyDownAudio && settingForm.value.audio === '1') {
+        try {
+          this.keyDownAudio.currentTime = 0
+          await this.keyDownAudio.play()
+        } catch (error) {
+          console.error(error)
+        }
+      }
       if (settingForm.value.vibrate === '1' && settingForm.value.vibMethod === '1') {
         navigator.vibrate(200)
       } else if (settingForm.value.vibrate === '1' && settingForm.value.vibMethod === '2') {

@@ -5,15 +5,15 @@ import { useSettingStore } from './stores/setting';
 const store = useSettingStore()
 const route = useRoute()
 const changeTheme = (value) => {
-  store.$state.darkTheme = value
+  store.darkTheme = value
 }
 store.platformPre()
 </script>
 
 <template>
-  <van-config-provider class="h-full" :theme="store.$state.darkTheme">
+  <van-config-provider class="h-full" :theme="store.darkTheme">
     <div class="container1">
-      <Header :currentTheme="store.$state.darkTheme" @changeTheme="changeTheme">
+      <Header :currentTheme="store.darkTheme" @changeTheme="changeTheme">
       </Header>
       <RouterView v-slot="{ Component }">
         <transition name="fade">

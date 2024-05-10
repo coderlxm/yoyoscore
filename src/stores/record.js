@@ -22,9 +22,9 @@ export const useRecordStore = defineStore('record', {
           // 确保每个对象都有 sumScore 字段，如果没有，则尝试使用 score 字段
           const scoreA = 'sumScore' in a ? a.sumScore : a.score;
           const scoreB = 'sumScore' in b ? b.sumScore : b.score;
-          if (useSettingStore().$state.settingForm.sort === '1') {
+          if (useSettingStore().settingForm.sort === '1') {
             return scoreB - scoreA
-          } else if (useSettingStore().$state.settingForm.sort === '0') {
+          } else if (useSettingStore().settingForm.sort === '0') {
             return scoreA - scoreB
           }
         });

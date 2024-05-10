@@ -20,7 +20,10 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt'], // 静态资源列表
+      srcDir: 'src',
+      filename: 'service-worker.js',
+      strategies: 'injectManifest',
+      injectRegister: 'auto',
       manifest: {
         name: 'YoYoScore',
         short_name: 'YoYoScore',
@@ -30,12 +33,12 @@ export default defineConfig({
         theme_color: '#f01654',
         icons: [
           {
-            src: 'YoYoScore.webp', // 相对于 public 目录
+            src: 'YoYoScoreNew.webp', // 相对于 public 目录
             sizes: '192x192',
             type: 'image/webp'
           },
           {
-            src: 'YoYoScore.webp', // 相对于 public 目录
+            src: 'YoYoScoreNew.webp', // 相对于 public 目录
             sizes: '512x512',
             type: 'image/webp'
           }
@@ -43,6 +46,15 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
