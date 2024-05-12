@@ -18,9 +18,10 @@ const edit = () => {
   isEditMode.value = !isEditMode.value
 }
 const del = (item) => {
-  const itemAtIndex = recordStore.recordedGames.findIndex((record) => item.name === record.name)
-  // console.log(itemAtIndex);
-  recordStore.recordedGames.splice(itemAtIndex, 1)
+  const itemAtIndex = recordStore.recordedGames.findIndex((record) => item === record)
+  if (itemAtIndex > -1) {
+    recordStore.recordedGames.splice(itemAtIndex, 1)
+  }
 }
 const toggleScoreMode = () => {
   scoreMode.value === 0 ? scoreMode.value = 1 : scoreMode.value = 0
