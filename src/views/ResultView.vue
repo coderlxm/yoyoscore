@@ -14,9 +14,6 @@ const isEditMode = ref(false)
 const scoreMode = ref(1)
 const store = useResultStore()
 const recordStore = useRecordStore()
-const edit = () => {
-  isEditMode.value = !isEditMode.value
-}
 const del = (item) => {
   const itemAtIndex = recordStore.recordedGames.findIndex((record) => item === record)
   if (itemAtIndex > -1) {
@@ -190,7 +187,8 @@ watchEffect(() => {
       </div>
     </van-button>
     <!-- <van-button plain class="flex-1" @click="" size="small" color="#f01654">添加比赛</van-button> -->
-    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="edit" size="small" color="#f01654">
+    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="isEditMode = !isEditMode" size="small"
+      color="#f01654">
       <div class="flex items-center gap-1">
         <Icon icon="uil:edit" class="font-size-5" />
         {{
