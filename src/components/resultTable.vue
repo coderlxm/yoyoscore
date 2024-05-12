@@ -30,7 +30,7 @@ const viewTips = (item) => {
           <div class="flex items-center justify-center gap-1">
             <van-tag
               v-if="props.results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1"
-              plain color="#f01654">重复</van-tag>
+              plain color="#f01654">重名</van-tag>
             <span>{{ item.name ? item.name : '--' }}</span>
           </div>
         </td>
