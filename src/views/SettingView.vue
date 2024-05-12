@@ -101,6 +101,12 @@ const onSubmit = (values) => {
           保存设置
         </div>
       </van-button>
+      <van-button color="#f01654" @click="router.push({ name: 'about' })" round block plain type="primary">
+        <div class="flex items-center gap-1">
+          <Icon class="font-size-5" icon="material-symbols:info" />
+          关于YoYoScore
+        </div>
+      </van-button>
       <van-button color="#f01654" @click="back" round block plain type="primary">
         <div class="flex items-center gap-1">
           <Icon class="font-size-5" icon="mingcute:back-fill" />
