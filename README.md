@@ -1,7 +1,7 @@
 <br>
 
 <p align="center">
-<img src="https://yoyo.xmcloud.buzz/YoYoScoreNew.webp" style="width:100px;" />
+<img src="https://yoyoscore.cc/YoYoScoreNew.webp" style="width:100px;" />
 </p>
 
 <h1 align="center">YoYoScore</h1>
@@ -12,23 +12,30 @@ A more elegant and beautiful Clicker that supports PWA offline use
 
 <br>
 <p align="center">
-<a href="https://yoyo.xmcloud.buzz/">🪀 Preview the YoYoScore</a>
+<a href="https://yoyoscore.cc/">🪀 Preview the YoYoScore</a>
 
 </p>
 <br>
 
 ## Features
+1.3 is released !
+  1. Added remark feature in record page.
+  2. Result page can display remark info if exists.
+  3. Fixed some bugs about display. 
+  4. The tag of repeat contestants will be marked.
+  5. service worker config updated.
+
 1.2.1 is released !
 features:
   1. Results page layout has been optimized.
-  2. the audio of +/- button will be preload before you enter the homepage
-  3. keyboard event trigger has been debounced.
+  2. The audio of +/- button will be preload before enter the homepage.
+  3. Keyboard event trigger has been debounced.
 
 1.2 is released !
 features:
   1. Results can be exported to xlsx.
   2. The method of audioPlay was optimized.
-  3. nginx config updated (about cache-control).
+  3. Nginx config updated (about cache-control).
   
 1.1.1 is released !
 features:
