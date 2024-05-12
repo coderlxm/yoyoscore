@@ -13,7 +13,7 @@ const scoreStore = useScoreStore()
 const { pointadd, pointmin, computedScore } = storeToRefs(scoreStore)
 // const activeNames = ref(['1', '2', '3']);
 const save = () => {
-  const contsObj = { pointadd: pointadd.value, pointmin: pointmin.value, sumScore: computedScore.value, name: store.name, game: store.game }
+  const contsObj = { pointadd: pointadd.value, pointmin: pointmin.value, sumScore: computedScore.value, name: store.name, game: store.game, tips: store.tips }
   let isAllNull = Object.values(contsObj).every(item => item == 0 || item == '')
   if (!isAllNull) {
     store.recordedGames.push(contsObj)
@@ -21,6 +21,7 @@ const save = () => {
   scoreStore.pressToZero()
   store.game = ''
   store.name = ''
+  store.tips = ''
   router.push({ name: 'home' })
 }
 const chooseThisTag = (item) => {
@@ -61,6 +62,12 @@ const chooseThisTag = (item) => {
             <van-tag color="#f01654" @click="chooseThisTag(item)" v-for="(item, index) in store.gamesList" :key="index"
               type="primary" size="large">{{ item }}</van-tag>
           </div>
+        </van-cell-group>
+      </van-collapse-item>
+      <van-collapse-item title="备注（可选）" name="4">
+        <van-cell-group inset>
+          <van-field v-model="store.tips" rows="2" autosize type="textarea" maxlength="30" placeholder="请输入备注"
+            show-word-limit />
         </van-cell-group>
       </van-collapse-item>
     </van-collapse>
