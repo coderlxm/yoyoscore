@@ -259,4 +259,8 @@ watchEffect(() => {
   color: var(--cancel-button-color) !important;
   /* 示例颜色 */
 }
+
+.van-popup--center {
+  width: 100%;
+}
 </style>
