@@ -239,9 +239,9 @@ watchEffect(() => {
     </van-button>
   </div>
   <van-popup round v-model:show="showBottom" position="bottom" :style="{ height: '18%' }">
-    <div class="p-6vw">
+    <div class="p-6">
       <div class="color-#f01654 font-bold">
-        <div class="font-size-5vw flex items-center gap-2">
+        <div class="font-size-5 flex items-center gap-2">
           <Icon icon="material-symbols:info" />选手{{ contsObj.name }}的备注信息
         </div>
         <p class="lh-3vh font-400">{{ contsObj.tips }}</p>
