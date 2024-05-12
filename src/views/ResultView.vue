@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect, computed } from "vue";
+import { ref, reactive, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useResultStore } from "@/stores/result";
 import { useRecordStore } from "@/stores/record";
@@ -59,10 +59,11 @@ const exportResults = () => {
     return {
       data: item.map((item2, index) => {
         return {
-          name: item2.name || '-',
+          name: item2.name || '--',
           score: store.dealScoreDisplay({ scoreMode: 'full', results: item }, item2),
           rank: useSettingStore().settingForm.sort === '1' ? index + 1 : item.length -
             index,
+          tips: item2.tips || '--'
         }
       })
     }
@@ -70,7 +71,7 @@ const exportResults = () => {
   const tables = Object.keys(recordStore.recordGroupedAndRanked).map((item, index) => {
     return {
       title: item,
-      headers: [["选手姓名", "得分", "排名"]],
+      headers: [["选手姓名", "得分", "排名", "备注"]],
       ...gameData[index]
     }
   })
@@ -85,7 +86,8 @@ const exportResults = () => {
       };
       cell.alignment = {
         horizontal: 'center',
-        vertical: 'middle'
+        vertical: 'middle',
+        wrapText: true
       };
     });
   };
@@ -97,7 +99,7 @@ const exportResults = () => {
       const worksheet = workbook.addWorksheet(table.title || ' ');
 
       // 添加标题
-      worksheet.mergeCells('A1', 'C1');
+      worksheet.mergeCells('A1', 'D1');
       const titleCell = worksheet.getCell('A1');
       titleCell.value = table.title || ' ';
       titleCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
@@ -120,7 +122,7 @@ const exportResults = () => {
       const headerRow = worksheet.addRow(headers);
       headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
       headerRow.alignment = { horizontal: 'center', vertical: 'middle' };
-      headerRow.height = 22.5; // 默认行高的1.5倍（15 * 1.5）
+      headerRow.height = 30; // 默认行高的1.5倍（15 * 1.5）
       headerRow.eachCell((cell) => {
         cell.fill = {
           type: 'pattern',
@@ -139,11 +141,12 @@ const exportResults = () => {
       worksheet.getColumn(1).width = 20;
       worksheet.getColumn(2).width = 25;
       worksheet.getColumn(3).width = 10;
+      worksheet.getColumn(4).width = 40;
       // 添加数据
       table.data.forEach(item => {
         const dataRow = Object.values(item);
         const row = worksheet.addRow(dataRow);
-        row.height = 17.5
+        row.height = 25
         addBorders(row); // 为数据行添加边框
       });
     });
@@ -159,6 +162,13 @@ const exportResults = () => {
 
   // 导出 Excel
   createExcelFile('比赛成绩表.xlsx');
+}
+
+const showBottom = ref(false)
+const contsObj = reactive({})
+const viewTips = (value) => {
+  Object.assign(contsObj, value)
+  showBottom.value = true
 }
 watchEffect(() => {
   if (useSettingStore().darkTheme === 'dark') {
@@ -202,7 +212,8 @@ watchEffect(() => {
                 color="#f01654">删除</van-button></div>
           </div>
         </template>
-        <result-table @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode" :results="item"></result-table>
+        <result-table @viewTips="viewTips" @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode"
+          :results="item"></result-table>
       </van-collapse-item>
       <!-- <van-collapse-item title="选手姓名" name="2">
       <van-cell-group inset>
@@ -227,6 +238,16 @@ watchEffect(() => {
       </div>
     </van-button>
   </div>
+  <van-popup round v-model:show="showBottom" position="bottom" :style="{ height: '18%' }">
+    <div class="p-6vw">
+      <div class="color-#f01654 font-bold">
+        <div class="font-size-5vw flex items-center gap-2">
+          <Icon icon="material-symbols:info" />选手{{ contsObj.name }}的备注信息
+        </div>
+        <p class="lh-3vh font-400">{{ contsObj.tips }}</p>
+      </div>
+    </div>
+  </van-popup>
 </template>
 <style>
 :root {

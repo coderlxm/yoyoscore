@@ -5,7 +5,8 @@ export const useRecordStore = defineStore('record', {
     activeNames: ['1', '2', '3'],
     recordedGames: [],
     game: '',
-    name: ''
+    name: '',
+    tips: ''
   }),
   getters: {
     gamesList: (state) => [...new Set(state.recordedGames.map(item => item.game))].filter((item) => item !== ''),
