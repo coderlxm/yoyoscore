@@ -1,7 +1,5 @@
 <script setup>
 import { useRouter } from "vue-router";
-// import { useRecordStore } from "@/stores/record";
-// import { useScoreStore } from "@/stores/score";
 import { recordStore, scoreStore, settingStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
