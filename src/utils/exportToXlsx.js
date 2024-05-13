@@ -53,7 +53,7 @@ const exportResults = () => {
       titleCell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: settingStore.primaryColor }
+        fgColor: { argb: settingStore.primaryColor.slice(1) }
       };
 
       // 设置标题单元格的行高
@@ -73,7 +73,7 @@ const exportResults = () => {
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
-          fgColor: { argb: settingStore.primaryColor }
+          fgColor: { argb: settingStore.primaryColor.slice(1) }
         };
         cell.border = {
           top: { style: 'thin' },
