@@ -22,7 +22,7 @@ const delGame = (item) => {
   showConfirmDialog({
     title: `确认要删除比赛${item[0].game}吗？`,
     theme: 'round-button',
-    confirmButtonColor: '#f01654',
+    confirmButtonColor: settingStore.primaryColor,
     cancelButtonColor: settingStore.darkTheme === 'dark' ? '#111' : '#fff',
   })
     .then(() => {
@@ -63,14 +63,14 @@ watchEffect(() => {
 <template>
   <div class="flex gap-3 mb-5 w-full mt-7">
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="scoreMode === 0 ? scoreMode = 1 : scoreMode = 0"
-      size="small" color="#f01654">
+      size="small" :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />切换分数显示模式
       </div>
     </van-button>
-    <!-- <van-button plain class="flex-1" @click="" size="small" color="#f01654">添加比赛</van-button> -->
+    <!-- <van-button plain class="flex-1" @click="" size="small" :color="settingStore.primaryColor">添加比赛</van-button> -->
     <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="isEditMode = !isEditMode" size="small"
-      color="#f01654">
+      :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon icon="uil:edit" class="font-size-5" />
         {{
@@ -85,12 +85,13 @@ watchEffect(() => {
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
           <div class="flex justify-between items-center">
-            <div class="pr-2 flex flex-1 justify-between font-700 font-size-4 color-#f01654">
+            <div
+              :class="['pr-2', 'flex', 'flex-1', 'justify-between', 'font-700', 'font-size-4', `color-${settingStore.primaryColor}`]">
               <div>比赛名称</div>
               <div>{{ key }}</div>
             </div>
             <div class="mt--1" v-if="isEditMode"><van-button @click.stop="delGame(item)" size="mini"
-                color="#f01654">删除</van-button></div>
+                :color="settingStore.primaryColor">删除</van-button></div>
           </div>
         </template>
         <result-table @viewTips="viewTips" @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode"
@@ -106,13 +107,13 @@ watchEffect(() => {
     </van-empty>
   </div>
   <div class="grid gap-4 mt-4">
-    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block color="#f01654">
+    <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon class="font-size-5" icon="entypo:export" />
         导出比赛成绩为Excel表格
       </div>
     </van-button>
-    <van-button color="#f01654" @click="router.push({ name: 'home' })" round block plain>
+    <van-button :color="settingStore.primaryColor" @click="router.push({ name: 'home' })" round block plain>
       <div class="flex items-center gap-1">
         <Icon class="font-size-5" icon="mingcute:back-fill" />
         返回
@@ -121,7 +122,7 @@ watchEffect(() => {
   </div>
   <van-popup round v-model:show="showBottom" position="bottom" :style="{ height: '18%' }">
     <div class="p-6">
-      <div class="color-#f01654 font-bold">
+      <div :class="[`color-${settingStore.primaryColor}`, 'font-bold']">
         <div class="font-size-5 flex items-center gap-2">
           <Icon icon="material-symbols:info" />选手{{ contsObj.name }}的备注信息
         </div>

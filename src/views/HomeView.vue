@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
-const { settingForm, btnOrder } = storeToRefs(useSettingStore())
+const { settingForm, btnOrder, primaryColor } = storeToRefs(useSettingStore())
 const router = useRouter()
 const route = useRoute()
 const toSetting = () => {
@@ -69,7 +69,8 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-col gap-5 full pt-7">
-    <van-button :style="{ order: btnOrder.orderTop }" @click="store.sum('add')" class="flex-1" plain color="#f01654">
+    <van-button :style="{ order: btnOrder.orderTop }" @click="store.sum('add')" class="flex-1" plain
+      :color="primaryColor">
       <div>
         <span class="font-700 font-size-20">+ 1</span>
         <div class="font-size-6 mt-5">分数：{{ store.pointadd }}</div>
@@ -77,7 +78,7 @@ onUnmounted(() => {
     </van-button>
     <div :style="{ order: btnOrder.orderMedium }" class="flex flex-col gap-4">
       <div class="grid gap-3 button-grid">
-        <van-button color="#f01654"
+        <van-button :color="primaryColor"
           v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1, duration: 1000 }">
           <div class="flex items-center gap-1">
             <Icon icon="icon-park-outline:clear" class="font-size-5" style="color: #fff;" />
@@ -87,9 +88,9 @@ onUnmounted(() => {
         </van-button>
         <van-button
           v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1, duration: 1000 }"
-          color="#f01654" plain>
+          :color="primaryColor" plain>
           <div class="flex items-center gap-1">
-            <Icon icon="jam:write" class="font-size-5" style="color: #f01654;" />
+            <Icon icon="jam:write" class="font-size-5" />
             <span>{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</span>
           </div>
         </van-button>
@@ -97,7 +98,7 @@ onUnmounted(() => {
       <div class="grid gap-3 button-grid-2">
         <van-button
           v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1, duration: 1000 }"
-          plain color="#f01654">
+          plain :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="uil:setting" />
             <span>{{ settingForm.trigger === 1 ? '长按设置' : '设置' }}</span>
@@ -105,7 +106,7 @@ onUnmounted(() => {
         </van-button>
         <van-button
           v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1, duration: 1000 }"
-          color="#f01654">
+          :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="carbon:result" />
             <span>{{ settingForm.trigger === 1 ? '长按查看结果' : '查看结果' }}</span>
@@ -113,7 +114,7 @@ onUnmounted(() => {
         </van-button>
       </div>
     </div>
-    <van-button :style="{ order: btnOrder.orderBottom }" @click="store.sum()" class="flex-1" color="#f01654">
+    <van-button :style="{ order: btnOrder.orderBottom }" @click="store.sum()" class="flex-1" :color="primaryColor">
       <div>
         <span class="font-700 font-size-20">- 1</span>
         <div class="font-size-6 mt-5">扣分：{{ store.pointmin }}</div>
