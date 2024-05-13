@@ -85,8 +85,8 @@ watchEffect(() => {
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
           <div class="flex justify-between items-center">
-            <div
-              :class="['pr-2', 'flex', 'flex-1', 'justify-between', 'font-700', 'font-size-4', `color-${settingStore.primaryColor}`]">
+            <div :style="{ color: settingStore.primaryColor }"
+              :class="['pr-2', 'flex', 'flex-1', 'justify-between', 'font-700', 'font-size-4']">
               <div>比赛名称</div>
               <div>{{ key }}</div>
             </div>
@@ -122,7 +122,7 @@ watchEffect(() => {
   </div>
   <van-popup round v-model:show="showBottom" position="bottom" :style="{ height: '18%' }">
     <div class="p-6">
-      <div :class="[`color-${settingStore.primaryColor}`, 'font-bold']">
+      <div :style="{ color: settingStore.primaryColor }" :class="['font-bold']">
         <div class="font-size-5 flex items-center gap-2">
           <Icon icon="material-symbols:info" />选手{{ contsObj.name }}的备注信息
         </div>

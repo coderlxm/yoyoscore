@@ -38,7 +38,8 @@ const chooseThisTag = (item) => {
           </van-field>
           <van-field name="trigger" label="负分">
             <template #input>
-              <span :class="[`color-${settingStore.primaryColor}`, 'font-700', 'font-size-5']">-{{ pointmin }}</span>
+              <span :class="['font-700', 'font-size-5']" :style="{ color: settingStore.primaryColor }">-{{ pointmin
+                }}</span>
             </template>
           </van-field>
           <van-field name="trigger" label="总得分">

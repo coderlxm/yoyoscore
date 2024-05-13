@@ -14,7 +14,7 @@ const viewTips = (item) => {
 }
 </script>
 <template>
-  <table :class="['w-full', `color-${settingStore.primaryColor}`]">
+  <table :class="['w-full']" :style="{ color: settingStore.primaryColor }">
     <thead>
       <tr class="w-full flex justify-between">
         <th class="w-24vw">选手姓名</th>
