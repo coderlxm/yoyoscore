@@ -57,7 +57,7 @@ app.directive('longpress', {
     el.addEventListener('mousedown', start);
     el.addEventListener('touchstart', start);
     el.addEventListener('mouseup', cancel);
-    el.addEventListener('mouseout', cancel);
+    // el.addEventListener('mouseout', cancel);
     el.addEventListener('touchend', cancel);
     el.addEventListener('touchcancel', cancel);
 
@@ -71,7 +71,7 @@ app.directive('longpress', {
       el.removeEventListener('mousedown', el._longPressHandlers.start);
       el.removeEventListener('touchstart', el._longPressHandlers.start);
       el.removeEventListener('mouseup', el._longPressHandlers.cancel);
-      el.removeEventListener('mouseout', el._longPressHandlers.cancel);
+      // el.removeEventListener('mouseout', el._longPressHandlers.cancel);
       el.removeEventListener('touchend', el._longPressHandlers.cancel);
       el.removeEventListener('touchcancel', el._longPressHandlers.cancel);
     }
