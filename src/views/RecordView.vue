@@ -11,7 +11,7 @@ const back = () => {
 const { pointadd, pointmin, computedScore } = storeToRefs(scoreStore)
 // const activeNames = ref(['1', '2', '3']);
 const save = () => {
-  const contsObj = { pointadd: pointadd.value, pointmin: pointmin.value, sumScore: computedScore.value, name: recordStore.name, game: recordStore.game, tips: recordStore.tips }
+  const contsObj = { pointadd: pointadd.value, pointmin: pointmin.value, sumScore: computedScore.value, name: recordStore.name.trim(), game: recordStore.game.trim(), tips: recordStore.tips.trim() }
   let isAllNull = Object.values(contsObj).every(item => item == 0 || item == '')
   if (!isAllNull) {
     recordStore.recordedGames.push(contsObj)
