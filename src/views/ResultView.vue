@@ -89,7 +89,8 @@ watchEffect(() => {
     </van-button>
   </div>
   <div v-show="!settingStore.isFullScreen" class="mb-3.6 flex">
-    <van-button class="flex-1" @click="unfoldAllGames" size="small" :color="settingStore.primaryColor">
+    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="unfoldAllGames" size="small"
+      :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon class="font-size-5" v-if="isFolded" icon="hugeicons:unfold-less" />
         <Icon class="font-size-5" v-else icon="hugeicons:unfold-more" />{{ isFolded ? '折叠' : '展开' }}全部比赛
