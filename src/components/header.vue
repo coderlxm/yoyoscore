@@ -14,7 +14,7 @@ const toggleFullScreen = () => {
   } else {
     // 如果当前已经是全屏模式，退出全屏模式
     if (document.exitFullscreen) {
-      document.exitFullscreen();
+      document.exitFullscreen()
     }
   }
 }

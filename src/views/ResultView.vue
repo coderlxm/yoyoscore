@@ -26,7 +26,8 @@ const delGame = (item) => {
     cancelButtonColor: settingStore.darkTheme === 'dark' ? '#111' : '#fff',
   })
     .then(() => {
-      // 下面这个方法是错的,有数组数组索引偏移的问题
+      // 下面这个方法是错的,有数组数组索引偏移的问题，可以通过逆序迭代解决，或者使用filter
+      // this following method is wrong, it will cause index of array mismatch
       // recordStore.recordedGames.forEach((record, index) => {
       //   if (item[0].game === record.game) {
       //     recordStore.recordedGames.splice(index, 1)
@@ -69,7 +70,7 @@ watchEffect(() => {
 
 </script>
 <template>
-  <div class="flex gap-3 mb-3.5 w-full mt-7">
+  <div v-show="!settingStore.isFullScreen" class="flex gap-3 mb-3.5 w-full mt-7">
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="scoreMode === 0 ? scoreMode = 1 : scoreMode = 0"
       size="small" :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
@@ -87,15 +88,17 @@ watchEffect(() => {
       </div>
     </van-button>
   </div>
-  <div class="mb-3.6 flex">
+  <div v-show="!settingStore.isFullScreen" class="mb-3.6 flex">
     <van-button class="flex-1" @click="unfoldAllGames" size="small" :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
-        <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />{{ isFolded ? '折叠' : '展开' }}全部比赛
+        <Icon class="font-size-5" v-if="isFolded" icon="hugeicons:unfold-less" />
+        <Icon class="font-size-5" v-else icon="hugeicons:unfold-more" />{{ isFolded ? '折叠' : '展开' }}全部比赛
       </div>
     </van-button>
   </div>
-  <div :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults }"
-    style="height: 68vh;overflow-y: auto;">
+  <div
+    :class="{ 'flex': true, 'flex-col': true, 'justify-center': !isNotEmptyResults, 'mt-6': settingStore.isFullScreen }"
+    :style="{ 'height': settingStore.isFullScreen ? '89vh' : '66vh', 'overflow-y': 'auto' }">
     <van-collapse v-show="isNotEmptyResults" v-model="resultStore.activeNames">
       <van-collapse-item :name="key" v-for="(item, key) in recordStore.recordGroupedAndRanked" :key="key">
         <template #title>
@@ -121,7 +124,7 @@ watchEffect(() => {
     <van-empty v-show="!isNotEmptyResults" description="暂无成绩，你可以开始记录">
     </van-empty>
   </div>
-  <div class="grid gap-4 mt-4">
+  <div v-show="!settingStore.isFullScreen" class="grid gap-4 mt-4">
     <van-button :disabled="!isNotEmptyResults" @click="exportResults" round block :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon class="font-size-5" icon="entypo:export" />
