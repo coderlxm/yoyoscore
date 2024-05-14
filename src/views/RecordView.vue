@@ -1,12 +1,9 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { recordStore, scoreStore, settingStore } from "@/stores";
+import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
 const router = useRouter()
-const back = () => {
-  router.push({ name: 'home' })
-}
 
 const { pointadd, pointmin, computedScore } = storeToRefs(scoreStore)
 // const activeNames = ref(['1', '2', '3']);
@@ -15,6 +12,11 @@ const save = () => {
   let isAllNull = Object.values(contsObj).every(item => item == 0 || item == '')
   if (!isAllNull) {
     recordStore.recordedGames.push(contsObj)
+    if (resultStore.activeNames.length === 0) {
+      resultStore.activeNames.push(contsObj.game)
+    } else {
+      resultStore.activeNames = [contsObj.game]
+    }
   }
   scoreStore.pressToZero()
   recordStore.game = ''
@@ -25,6 +27,8 @@ const save = () => {
 const chooseThisTag = (item) => {
   recordStore.game = item
 }
+// always keeping remark item collapsed
+if (recordStore.activeNames.includes('4')) recordStore.activeNames = recordStore.activeNames.filter((item) => item != '4')
 </script>
 <template>
   <div class="mt-10">
@@ -78,7 +82,7 @@ const chooseThisTag = (item) => {
           保存
         </div>
       </van-button>
-      <van-button :color="settingStore.primaryColor" @click="back" round block plain>
+      <van-button :color="settingStore.primaryColor" @click="router.push({ name: 'home' })" round block plain>
         <div class="flex items-center gap-1">
           <Icon class="font-size-5" icon="mingcute:back-fill" />
           返回

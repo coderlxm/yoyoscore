@@ -49,7 +49,14 @@ const viewTips = (value) => {
   Object.assign(contsObj, value)
   showBottom.value = true
 }
+const isFolded = ref(false)
+const unfoldAllGames = () => {
+  isFolded.value = !isFolded.value
+  resultStore.activeNames = isFolded.value ? Object.keys(recordStore.recordGroupedAndRanked) : [];
+}
 watchEffect(() => {
+  if (resultStore.activeNames.length === Object.keys(recordStore.recordGroupedAndRanked).length) isFolded.value = true
+  // console.log(resultStore.activeNames);
   if (settingStore.darkTheme === 'dark') {
     document.documentElement.style.setProperty(
       '--cancel-button-color', '#fff'
@@ -59,9 +66,10 @@ watchEffect(() => {
       '--cancel-button-color', 'black')
   }
 })
+
 </script>
 <template>
-  <div class="flex gap-3 mb-5 w-full mt-7">
+  <div class="flex gap-3 mb-3.5 w-full mt-7">
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="scoreMode === 0 ? scoreMode = 1 : scoreMode = 0"
       size="small" :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
@@ -76,6 +84,13 @@ watchEffect(() => {
         {{
           isEditMode ? '退出编辑' : '编辑'
         }}
+      </div>
+    </van-button>
+  </div>
+  <div class="mb-3.6 flex">
+    <van-button class="flex-1" @click="unfoldAllGames" size="small" :color="settingStore.primaryColor">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-4.5" icon="teenyicons:toggle-solid" />{{ isFolded ? '折叠' : '展开' }}全部比赛
       </div>
     </van-button>
   </div>
