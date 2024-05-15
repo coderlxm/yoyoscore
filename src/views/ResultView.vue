@@ -114,8 +114,7 @@ watchEffect(() => {
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="delAllGames" size="small"
       :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
-        <Icon class="font-size-5" v-if="isFolded" icon="hugeicons:unfold-less" />
-        <Icon class="font-size-5" v-else icon="hugeicons:unfold-more" />删除全部比赛
+        <Icon class="font-size-5" icon="material-symbols:delete" />删除全部比赛
       </div>
     </van-button>
   </div>
