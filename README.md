@@ -18,12 +18,17 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
-1.3 is released !
+1.3 is released ! (A number of improvements have been included)
   1. Added remark feature in record page.
   2. Result page can display remark info if exists.
   3. Fixed some bugs about display. 
-  4. The tag of repeat contestants will be marked.
-  5. service worker config updated.
+  4. The item of game result can be toggled.
+  5. All deletions are supported in results page.
+
+1.2.2 is released !
+  1. The tag of repeat contestants will be marked.
+  2. Service worker config updated.
+  3. Result page has been adapted for full-screen mode now.
 
 1.2.1 is released !
 features:

@@ -1,5 +1,6 @@
 <script setup>
 import Header from '@/components/header.vue'
+import { onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { useSettingStore } from './stores/setting';
 const store = useSettingStore()
@@ -8,6 +9,10 @@ const changeTheme = (value) => {
   store.darkTheme = value
 }
 store.platformPre()
+store.setupFullScreenListener()
+onUnmounted(() => {
+  store.removeFullScreenListener()
+})
 </script>
 
 <template>

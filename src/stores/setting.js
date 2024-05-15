@@ -17,9 +17,21 @@ export const useSettingStore = defineStore('setting', {
       orderMedium: 3,
       orderBottom: 2
     },
-    deviceType: ''
+    deviceType: '',
+    isFullScreen: !!document.fullscreenElement
   }),
   actions: {
+    updateFullScreenStatus() {
+      this.isFullScreen = !!document.fullscreenElement;
+    },
+    setupFullScreenListener() {
+      // 设置监听器，当全屏状态改变时更新状态
+      document.addEventListener('fullscreenchange', this.updateFullScreenStatus);
+    },
+    removeFullScreenListener() {
+      // 移除监听器
+      document.removeEventListener('fullscreenchange', this.updateFullScreenStatus);
+    },
     platformPre() {
       const parser = new UAParser();
       const result = parser.getResult();

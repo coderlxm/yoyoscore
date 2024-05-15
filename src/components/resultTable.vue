@@ -14,7 +14,7 @@ const viewTips = (item) => {
 }
 </script>
 <template>
-  <table class="w-full color-#f01654">
+  <table :class="['w-full']" :style="{ color: settingStore.primaryColor }">
     <thead>
       <tr class="w-full flex justify-between">
         <th class="w-24vw">选手姓名</th>
@@ -30,7 +30,7 @@ const viewTips = (item) => {
           <div class="flex items-center justify-center gap-1">
             <van-tag
               v-if="props.results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1"
-              plain color="#f01654">重名</van-tag>
+              plain :color="settingStore.primaryColor">重名</van-tag>
             <span>{{ item.name ? item.name : '--' }}</span>
           </div>
         </td>
@@ -45,11 +45,12 @@ const viewTips = (item) => {
           }}
         </td>
         <td class="w-8vw text-center" v-if="!isEditMode">
-          <van-button size="mini" @click="viewTips(item)" v-if="item.tips" color="#f01654">查看</van-button>
+          <van-button size="mini" @click="viewTips(item)" v-if="item.tips"
+            :color="settingStore.primaryColor">查看</van-button>
           <span v-else>--</span>
         </td>
         <td class="w-8vw text-center" v-if="props.isEditMode">
-          <van-button @click="delRecord(item)" color="#f01654" size="mini">删除</van-button>
+          <van-button @click="delRecord(item)" :color="settingStore.primaryColor" size="mini">删除</van-button>
         </td>
       </tr>
     </tbody>

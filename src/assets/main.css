@@ -10,3 +10,8 @@ body {
 #app {
   height: 100%;
 }
+
+:root {
+  --primary-color: #f01654;
+  /* 定义主题色 */
+}
