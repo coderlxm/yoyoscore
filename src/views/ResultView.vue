@@ -40,6 +40,21 @@ const delGame = (item) => {
       // on cancel
     });
 }
+const delAllGames = () => {
+  showConfirmDialog({
+    title: `确认要删除全部比赛吗？`,
+    theme: 'round-button',
+    message: '（注：不可恢复，请谨慎操作！）',
+    confirmButtonColor: settingStore.primaryColor,
+    cancelButtonColor: settingStore.darkTheme === 'dark' ? '#111' : '#fff',
+  })
+    .then(() => {
+      recordStore.recordedGames = []
+    })
+    .catch(() => {
+      // on cancel
+    });
+}
 const isNotEmptyResults = computed(() => {
   return Object.keys(recordStore.recordGroupedAndRanked).length
 })
@@ -88,12 +103,19 @@ watchEffect(() => {
       </div>
     </van-button>
   </div>
-  <div v-show="!settingStore.isFullScreen" class="mb-3.6 flex">
-    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="unfoldAllGames" size="small"
+  <div v-show="!settingStore.isFullScreen" class="mb-3.6 flex gap-3">
+    <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="unfoldAllGames" size="small"
       :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
         <Icon class="font-size-5" v-if="isFolded" icon="hugeicons:unfold-less" />
         <Icon class="font-size-5" v-else icon="hugeicons:unfold-more" />{{ isFolded ? '折叠' : '展开' }}全部比赛
+      </div>
+    </van-button>
+    <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="delAllGames" size="small"
+      :color="settingStore.primaryColor">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" v-if="isFolded" icon="hugeicons:unfold-less" />
+        <Icon class="font-size-5" v-else icon="hugeicons:unfold-more" />删除全部比赛
       </div>
     </van-button>
   </div>
