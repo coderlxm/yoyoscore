@@ -4,7 +4,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const isRegUser = localStorage.getItem('isRegUser')
   if (!isRegUser && to.name !== 'start') {
     return { name: 'start' }
