@@ -13,12 +13,14 @@ store.setupFullScreenListener()
 onUnmounted(() => {
   store.removeFullScreenListener()
 })
+
 </script>
 
 <template>
   <van-config-provider class="h-full" :theme="store.darkTheme">
     <div class="container1">
-      <Header v-if="route.name !== 'start'" :currentTheme="store.darkTheme" @changeTheme="changeTheme">
+      <Header v-if="!route.meta.start && route.name !== undefined" :currentTheme="store.darkTheme"
+        @changeTheme="changeTheme">
       </Header>
       <RouterView v-slot="{ Component }">
         <!-- <transition name="fade">

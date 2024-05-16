@@ -5,7 +5,7 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to) => {
-  const isRegUser = localStorage.getItem('isRegUser')
+  const isRegUser = sessionStorage.getItem('isRegUser')
   if (!isRegUser && to.name !== 'start') {
     return { name: 'start' }
   }

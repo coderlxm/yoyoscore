@@ -77,8 +77,5 @@ app.directive('longpress', {
     }
   }
 });
-if (!localStorage.getItem('isRegUser')) {
-  await router.push({ name: 'start' })
-}
 
 app.mount('#app')

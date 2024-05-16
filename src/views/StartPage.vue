@@ -1,28 +1,20 @@
 <script setup>
-import { ref, onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from '@/stores/setting';
 import { Icon } from '@iconify/vue';
+import { storeToRefs } from "pinia";
 const router = useRouter()
 const store = useSettingStore()
 const startUse = () => {
-  localStorage.setItem('isRegUser', true)
+  sessionStorage.setItem('isRegUser', true)
   router.push({ name: 'home' })
 }
-const deferredPrompt = ref(null);
+const { deferredPrompt } = storeToRefs(store)
 
 const handleBeforeInstallPrompt = (e) => {
   e.preventDefault();
   deferredPrompt.value = e;
-};
-
-const promptInstall = async () => {
-  if (deferredPrompt.value) {
-    deferredPrompt.value.prompt();
-    const { outcome } = await deferredPrompt.value.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
-    deferredPrompt.value = null;
-  }
 };
 
 onMounted(() => {
@@ -45,10 +37,10 @@ onBeforeUnmount(() => {
           own terms</h4>
         <h4 class="self-end">---Kerian Cooper</h4>
       </div> -->
-        <van-button style="margin-bottom: 1rem;" :plain="store.deviceType === 'mobile'" :color="store.primaryColor"
+        <van-button style="margin-bottom: 1rem;" :plain="store.systemOSType !== 'ios'" :color="store.primaryColor"
           size="large" @click="startUse">开始使用</van-button>
         <van-button v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios' && deferredPrompt"
-          :color="store.primaryColor" size="large" @click="promptInstall">安装YoYoScore</van-button>
+          :color="store.primaryColor" size="large" @click="store.promptInstall()">安装YoYoScore</van-button>
         <!-- <h2>欢迎使用YoYoScore！</h2> -->
       </div>
     </div>

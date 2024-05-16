@@ -19,7 +19,8 @@ export const useSettingStore = defineStore('setting', {
     },
     deviceType: '',
     systemOSType: '',
-    isFullScreen: !!document.fullscreenElement
+    isFullScreen: !!document.fullscreenElement,
+    deferredPrompt: null
   }),
   actions: {
     updateFullScreenStatus() {
@@ -33,6 +34,14 @@ export const useSettingStore = defineStore('setting', {
       // 移除监听器
       document.removeEventListener('fullscreenchange', this.updateFullScreenStatus);
     },
+    async promptInstall() {
+      if (this.deferredPrompt) {
+        this.deferredPrompt.prompt();
+        const { outcome } = await this.deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        this.deferredPrompt = null;
+      }
+    },
     platformPre() {
       const parser = new UAParser();
       const result = parser.getResult();
@@ -43,7 +52,6 @@ export const useSettingStore = defineStore('setting', {
       } else {
         this.systemOSType = ''
       }
-      console.log(this.systemOSType);
       if (device === 'mobile' || device === 'tablet') {
         this.deviceType = 'mobile';
         this.settingForm.keyboard = false

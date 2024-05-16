@@ -1,7 +1,7 @@
 import HomeView from '../views/HomeView.vue'
 const routes = [
   {
-    path: '/start',
+    path: '/',
     name: 'start',
     meta: {
       start: true
@@ -9,7 +9,7 @@ const routes = [
     component: () => import('../views/StartPage.vue')
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },
