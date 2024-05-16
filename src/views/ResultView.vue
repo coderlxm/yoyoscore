@@ -1,12 +1,18 @@
 <script setup>
 import { ref, reactive, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
-import { recordStore, resultStore, settingStore } from "@/stores";
+// import { recordStore, resultStore, settingStore } from "@/stores";
+import { useRecordStore } from "@/stores/record";
+import { useResultStore } from "@/stores/result";
+import { useSettingStore } from "@/stores/setting";
 import { showConfirmDialog } from 'vant';
 import { Icon } from '@iconify/vue';
 import exportResults from "@/utils/exportToXlsx";
 import resultTable from "@/components/resultTable.vue"
 const router = useRouter()
+const recordStore = useRecordStore()
+const settingStore = useSettingStore()
+const resultStore = useResultStore()
 const isEditMode = ref(false)
 // 默认为1 总分模式1 计数模式0
 const scoreMode = ref(1)

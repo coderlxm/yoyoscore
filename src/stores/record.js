@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useSettingStore } from "./setting";
 export const useRecordStore = defineStore('record', {
   state: () => ({
-    activeNames: ['1', '2', '3'],
+    activeNames: ['score', 'name', 'game'],
     recordedGames: [],
     game: '',
     name: '',

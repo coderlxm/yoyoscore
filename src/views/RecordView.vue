@@ -1,10 +1,18 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
+// following is a big mistake
+// import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
+import { useRecordStore } from "@/stores/record";
+import { useScoreStore } from "@/stores/score";
+import { useResultStore } from "@/stores/result";
+import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
 const router = useRouter()
-
+const recordStore = useRecordStore()
+const scoreStore = useScoreStore()
+const settingStore = useSettingStore()
+const resultStore = useResultStore()
 const { pointadd, pointmin, computedScore } = storeToRefs(scoreStore)
 // const activeNames = ref(['1', '2', '3']);
 const save = () => {
@@ -28,12 +36,12 @@ const chooseThisTag = (item) => {
   recordStore.game = item
 }
 // always keeping remark item collapsed
-if (recordStore.activeNames.includes('4')) recordStore.activeNames = recordStore.activeNames.filter((item) => item != '4')
+if (recordStore.activeNames.includes('remark')) recordStore.activeNames = recordStore.activeNames.filter((item) => item != 'remark')
 </script>
 <template>
   <div class="mt-10">
     <van-collapse v-model="recordStore.activeNames">
-      <van-collapse-item title="选手分数" name="1">
+      <van-collapse-item title="选手分数" name="score">
         <van-form ref="formRef" colon label-width="33vw">
           <van-field label="正分">
             <template #input>
@@ -53,12 +61,12 @@ if (recordStore.activeNames.includes('4')) recordStore.activeNames = recordStore
           </van-field>
         </van-form>
       </van-collapse-item>
-      <van-collapse-item title="选手姓名" name="2">
+      <van-collapse-item title="选手姓名" name="name">
         <van-cell-group inset>
           <van-field v-model="recordStore.name" label="请输入" placeholder="选手姓名" />
         </van-cell-group>
       </van-collapse-item>
-      <van-collapse-item title="比赛名称" name="3">
+      <van-collapse-item title="比赛名称" name="game">
         <van-cell-group inset>
           <van-field v-model="recordStore.game" label="请输入或选择" placeholder="比赛名称" />
           <div class="mt-3 grid gap-2 w-full tags" v-if="recordStore.recordedGames.length">
@@ -68,7 +76,7 @@ if (recordStore.activeNames.includes('4')) recordStore.activeNames = recordStore
           </div>
         </van-cell-group>
       </van-collapse-item>
-      <van-collapse-item title="备注（可选）" name="4">
+      <van-collapse-item title="备注（可选）" name="remark">
         <van-cell-group inset>
           <van-field v-model="recordStore.tips" rows="2" autosize type="textarea" maxlength="30" placeholder="请输入备注"
             show-word-limit />

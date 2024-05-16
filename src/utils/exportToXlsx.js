@@ -1,5 +1,11 @@
-import { recordStore, resultStore, settingStore } from "@/stores";
+// import { recordStore, resultStore, settingStore } from "@/stores";
+import { useRecordStore } from "@/stores/record";
+import { useResultStore } from "@/stores/result";
+import { useSettingStore } from "@/stores/setting";
 import ExcelJS from 'exceljs';
+const recordStore = useRecordStore()
+const settingStore = useSettingStore()
+const resultStore = useResultStore()
 const exportResults = () => {
   const gameData = Object.values(recordStore.recordGroupedAndRanked).map((item) => {
     return {
