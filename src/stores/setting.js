@@ -18,6 +18,7 @@ export const useSettingStore = defineStore('setting', {
       orderBottom: 2
     },
     deviceType: '',
+    systemOSType: '',
     isFullScreen: !!document.fullscreenElement
   }),
   actions: {
@@ -36,7 +37,13 @@ export const useSettingStore = defineStore('setting', {
       const parser = new UAParser();
       const result = parser.getResult();
       const device = result.device.type;
-
+      const os = result.os
+      if (os.name.toLowerCase() === 'ios') {
+        this.systemOSType = 'ios'
+      } else {
+        this.systemOSType = ''
+      }
+      console.log(this.systemOSType);
       if (device === 'mobile' || device === 'tablet') {
         this.deviceType = 'mobile';
         this.settingForm.keyboard = false

@@ -21,7 +21,10 @@ const startUse = () => {
           own terms</h4>
         <h4 class="self-end">---Kerian Cooper</h4>
       </div> -->
-        <van-button :color="store.primaryColor" size="large" @click="startUse">开始使用</van-button>
+        <van-button style="margin-bottom: 1rem;" :plain="store.deviceType === 'mobile'" :color="store.primaryColor"
+          size="large" @click="startUse">开始使用</van-button>
+        <van-button v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios'" :color="store.primaryColor"
+          size="large" @click="startUse">安装YoYoScore</van-button>
         <!-- <h2>欢迎使用YoYoScore！</h2> -->
       </div>
     </div>
