@@ -1,5 +1,5 @@
 <script setup>
-import Header from '@/components/header.vue'
+import Header from '@/components/headerBar.vue'
 import { onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { useSettingStore } from './stores/setting';
