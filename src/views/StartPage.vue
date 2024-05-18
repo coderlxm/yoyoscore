@@ -1,9 +1,11 @@
 <script setup>
-import { onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from '@/stores/setting';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from "pinia";
+import { showToast } from 'vant';
+import QRCode from 'qrcode';
 const router = useRouter()
 const store = useSettingStore()
 const startUse = () => {
@@ -16,7 +18,52 @@ const handleBeforeInstallPrompt = (e) => {
   e.preventDefault();
   deferredPrompt.value = e;
 };
-
+const qrCodeUrl = ref('');
+const showShare = ref(false)
+const showQRCode = ref(false)
+const options = [
+  { name: '复制链接', icon: 'link' },
+  { name: '二维码', icon: 'qrcode' }
+];
+const share = () => {
+  showShare.value = true
+}
+const generateQRCode = async () => {
+  try {
+    qrCodeUrl.value = await QRCode.toDataURL(window.location.href, {
+      width: 150,  // 设置二维码宽度
+      height: 150, // 设置二维码高度
+      margin: 2    // 设置边距（可选）
+    });
+    showQRCode.value = true;
+  } catch (error) {
+    console.error('Failed to generate QR code', error);
+  }
+};
+const onSelect = async (option) => {
+  // showToast(option.name);
+  switch (option.name) {
+    case '二维码':
+      await generateQRCode();
+      break;
+    case '复制链接':
+      copyLink();
+      break;
+  }
+  showShare.value = false;
+};
+const copyLink = () => {
+  navigator.clipboard.writeText(window.location.href);
+  showToast('链接已复制');
+};
+const saveToAlbum = () => {
+  const aTag = document.createElement('a')
+  aTag.href = qrCodeUrl.value
+  aTag.download = 'YoYoScore.png'
+  document.body.appendChild(aTag)
+  aTag.click()
+  document.body.removeChild(aTag)
+}
 onMounted(() => {
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 });
@@ -41,10 +88,18 @@ onBeforeUnmount(() => {
           size="large" @click="startUse">开始使用</van-button>
         <van-button v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios' && deferredPrompt"
           :color="store.primaryColor" size="large" @click="store.promptInstall()">安装YoYoScore</van-button>
+        <van-button :color="store.primaryColor" size="large" @click="share">分享YoYoScore</van-button>
         <!-- <h2>欢迎使用YoYoScore！</h2> -->
       </div>
     </div>
   </Transition>
+  <van-share-sheet v-model:show="showShare" title="立即分享给好友" :options="options" @select="onSelect" />
+  <van-popup round v-model:show="showQRCode" position="bottom" :style="{ height: '33%' }">
+    <div class="p-6 w-full gap-5 flex flex-col justify-center items-center">
+      <img class="mt-5" :src="qrCodeUrl" alt="QR Code" />
+      <van-button @click="saveToAlbum" :color="store.primaryColor">保存二维码</van-button>
+    </div>
+  </van-popup>
 </template>
 <style>
 .full {
