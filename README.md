@@ -31,7 +31,8 @@ A more elegant and beautiful Clicker that supports PWA offline use
   3. Fixed some bugs about display. 
   4. The item of game result can be toggled.
   5. All deletions are supported in results page.
-
+  6. Full support github actions to make deploying much easier
+  
 1.2.2 is released !
   1. The tag of repeat contestants will be marked.
   2. Service worker config updated.
