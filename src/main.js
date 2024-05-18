@@ -42,6 +42,8 @@ app.directive('longpress', {
 
       // 如果长按未触发并且开关未启用长按，则调用短按处理函数
       if (!binding.value.enabled && binding.value.onShortPress) {
+        e.stopPropagation();
+        e.preventDefault();
         binding.value.onShortPress(e);
       }
     };
@@ -55,7 +57,7 @@ app.directive('longpress', {
 
     // 添加事件监听
     el.addEventListener('mousedown', start);
-    el.addEventListener('touchstart', start);
+    el.addEventListener('touchstart', start, { passive: true });
     el.addEventListener('mouseup', cancel);
     // el.addEventListener('mouseout', cancel);
     el.addEventListener('touchend', cancel);
