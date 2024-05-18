@@ -13,17 +13,20 @@ store.setupFullScreenListener()
 onUnmounted(() => {
   store.removeFullScreenListener()
 })
+
 </script>
 
 <template>
   <van-config-provider class="h-full" :theme="store.darkTheme">
     <div class="container1">
-      <Header :currentTheme="store.darkTheme" @changeTheme="changeTheme">
+      <Header v-if="!route.meta.start && route.name !== undefined" :currentTheme="store.darkTheme"
+        @changeTheme="changeTheme">
       </Header>
       <RouterView v-slot="{ Component }">
-        <transition name="fade">
+        <!-- <transition name="fade">
           <component :is="Component" :key="route.path" />
-        </transition>
+        </transition> -->
+        <component :is="Component" :key="route.path" />
       </RouterView>
     </div>
   </van-config-provider>
@@ -42,7 +45,7 @@ onUnmounted(() => {
   min-height: 100%;
 }
 
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -50,5 +53,5 @@ onUnmounted(() => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 </style>

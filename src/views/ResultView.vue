@@ -1,12 +1,18 @@
 <script setup>
 import { ref, reactive, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
-import { recordStore, resultStore, settingStore } from "@/stores";
+// import { recordStore, resultStore, settingStore } from "@/stores";
+import { useRecordStore } from "@/stores/record";
+import { useResultStore } from "@/stores/result";
+import { useSettingStore } from "@/stores/setting";
 import { showConfirmDialog } from 'vant';
 import { Icon } from '@iconify/vue';
 import exportResults from "@/utils/exportToXlsx";
 import resultTable from "@/components/resultTable.vue"
 const router = useRouter()
+const recordStore = useRecordStore()
+const settingStore = useSettingStore()
+const resultStore = useResultStore()
 const isEditMode = ref(false)
 // 默认为1 总分模式1 计数模式0
 const scoreMode = ref(1)
@@ -72,6 +78,7 @@ const unfoldAllGames = () => {
 }
 watchEffect(() => {
   if (resultStore.activeNames.length === Object.keys(recordStore.recordGroupedAndRanked).length) isFolded.value = true
+  if (resultStore.activeNames.length === 0) isFolded.value = false
   // console.log(resultStore.activeNames);
   if (settingStore.darkTheme === 'dark') {
     document.documentElement.style.setProperty(

@@ -53,6 +53,10 @@ window.addEventListener('resize', () => {
       <span :style="computedTitleStyle" class="font-700">YoYoScore</span>
     </div>
     <div class="flex gap-1">
+      <van-button v-if="store.deferredPrompt" :color="store.primaryColor" :size="computedSize"
+        @click="store.promptInstall()">
+        安装
+      </van-button>
       <van-button :color="store.primaryColor" :disabled="route.name !== 'home'" :size="computedSize"
         @click="toggleLayout">切换布局</van-button>
       <van-button :color="store.primaryColor" :size="computedSize" @click="toggleFullScreen">切换全屏</van-button>
