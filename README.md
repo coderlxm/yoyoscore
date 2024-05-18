@@ -18,6 +18,13 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
+1.3.1
+  1. Fix some bugs
+  2. stop propagation to solve the next page of click if overlap
+  3. optimize some interactions.
+  4. Added start page
+  5. Added install button and adapted android device to install directly.
+
 1.3 is released ! (A number of improvements have been included)
   1. Added remark feature in record page.
   2. Result page can display remark info if exists.
