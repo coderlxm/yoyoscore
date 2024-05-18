@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from '@vant/auto-import-resolver';
+import { VantResolver, VantImports } from '@vant/auto-import-resolver';
 import { VitePWA } from 'vite-plugin-pwa';
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +13,7 @@ export default defineConfig({
     vue(),
     UnoCSS(),
     AutoImport({
+      imports: [VantImports()],
       resolvers: [VantResolver()],
     }),
     Components({

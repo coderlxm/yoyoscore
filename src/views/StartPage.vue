@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 import { useSettingStore } from '@/stores/setting';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from "pinia";
-import { showToast } from 'vant';
 import QRCode from 'qrcode';
 const router = useRouter()
 const store = useSettingStore()
@@ -31,9 +30,9 @@ const share = () => {
 const generateQRCode = async () => {
   try {
     qrCodeUrl.value = await QRCode.toDataURL(window.location.href, {
-      width: 150,  // 设置二维码宽度
+      width: 150, // 设置二维码宽度
       height: 150, // 设置二维码高度
-      margin: 2    // 设置边距（可选）
+      margin: 2 // 设置边距（可选）
     });
     showQRCode.value = true;
   } catch (error) {
@@ -52,9 +51,13 @@ const onSelect = async (option) => {
   }
   showShare.value = false;
 };
+
 const copyLink = () => {
   navigator.clipboard.writeText(window.location.href);
-  showToast('链接已复制');
+  showSuccessToast({
+    message: '链接已复制',
+    overlay: true
+  });
 };
 const saveToAlbum = () => {
   const aTag = document.createElement('a')
@@ -86,7 +89,8 @@ onBeforeUnmount(() => {
       </div> -->
         <van-button style="margin-bottom: 1rem;" :plain="store.systemOSType !== 'ios'" :color="store.primaryColor"
           size="large" @click="startUse">开始使用</van-button>
-        <van-button v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios' && deferredPrompt"
+        <van-button style="margin-bottom: 1rem;"
+          v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios' && deferredPrompt"
           :color="store.primaryColor" size="large" @click="store.promptInstall()">安装YoYoScore</van-button>
         <van-button :color="store.primaryColor" size="large" @click="share">分享YoYoScore</van-button>
         <!-- <h2>欢迎使用YoYoScore！</h2> -->
@@ -127,4 +131,8 @@ onBeforeUnmount(() => {
     transform: scale(1);
   }
 }
+
+/* .color-success {
+  color: #f01654;
+} */
 </style>

@@ -3,6 +3,14 @@ import Header from '@/components/headerBar.vue'
 import { onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { useSettingStore } from './stores/setting';
+// Toast
+import "vant/es/toast/style";
+// Dialog
+import "vant/es/dialog/style";
+// Notify
+import "vant/es/notify/style";
+// ImagePreview
+import "vant/es/image-preview/style";
 const store = useSettingStore()
 const route = useRoute()
 const changeTheme = (value) => {
