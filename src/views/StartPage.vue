@@ -94,10 +94,10 @@ onBeforeUnmount(() => {
     </div>
   </Transition>
   <van-share-sheet v-model:show="showShare" title="立即分享给好友" :options="options" @select="onSelect" />
-  <van-popup round v-model:show="showQRCode" position="bottom" :style="{ height: '33%' }">
+  <van-popup round v-model:show="showQRCode" position="bottom" :style="{ height: '18rem' }">
     <div class="p-6 w-full gap-5 flex flex-col justify-center items-center">
       <img class="mt-5" :src="qrCodeUrl" alt="QR Code" />
-      <van-button @click="saveToAlbum" :color="store.primaryColor">保存二维码</van-button>
+      <van-button size="small" @click="saveToAlbum" :color="store.primaryColor">保存二维码</van-button>
     </div>
   </van-popup>
 </template>
