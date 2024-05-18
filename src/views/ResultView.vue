@@ -78,6 +78,7 @@ const unfoldAllGames = () => {
 }
 watchEffect(() => {
   if (resultStore.activeNames.length === Object.keys(recordStore.recordGroupedAndRanked).length) isFolded.value = true
+  if (resultStore.activeNames.length === 0) isFolded.value = false
   // console.log(resultStore.activeNames);
   if (settingStore.darkTheme === 'dark') {
     document.documentElement.style.setProperty(
