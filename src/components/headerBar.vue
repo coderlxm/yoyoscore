@@ -47,7 +47,7 @@ window.addEventListener('resize', () => {
 });
 </script>
 <template>
-  <div class="flex justify-between items-center h-5vh pt-9">
+  <div class="flex justify-between items-center h-5vh pt-9 pr-1.5rem pl-1.5rem">
     <div class="flex flex-1 items-center gap-2">
       <Icon class="font-size-8" icon="noto:yo-yo" />
       <span :style="computedTitleStyle" class="font-700">YoYoScore</span>

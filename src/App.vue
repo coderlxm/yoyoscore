@@ -26,10 +26,10 @@ onUnmounted(() => {
 
 <template>
   <van-config-provider class="h-full" :theme="store.darkTheme">
+    <Header v-if="!route.meta.start && route.name !== undefined" :currentTheme="store.darkTheme"
+      @changeTheme="changeTheme">
+    </Header>
     <div class="container1">
-      <Header v-if="!route.meta.start && route.name !== undefined" :currentTheme="store.darkTheme"
-        @changeTheme="changeTheme">
-      </Header>
       <RouterView v-slot="{ Component }">
         <!-- <transition name="fade">
           <component :is="Component" :key="route.path" />
@@ -50,7 +50,7 @@ onUnmounted(() => {
   align-items: center;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 /* .fade-enter-active,
