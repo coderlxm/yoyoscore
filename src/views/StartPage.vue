@@ -17,10 +17,10 @@ const handleBeforeInstallPrompt = (e) => {
   e.preventDefault();
   deferredPrompt.value = e;
 };
-const qrCodeUrl = ref('');
-const showShare = ref(false)
-const showQRCode = ref(false)
-const options = [
+let qrCodeUrl = ref('');
+let showShare = ref(false)
+let showQRCode = ref(false)
+let options = [
   { name: '复制链接', icon: 'link' },
   { name: '二维码', icon: 'qrcode' }
 ];
