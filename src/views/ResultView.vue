@@ -92,7 +92,7 @@ watchEffect(() => {
 
 </script>
 <template>
-  <div v-show="!settingStore.isFullScreen" class="flex gap-3 mb-3.5 w-full mt-7">
+  <div v-show="!settingStore.isFullScreen" class="grid grid-template gap-3 mb-3.5 w-full mt-7">
     <van-button :disabled="!isNotEmptyResults" class="flex-1" @click="scoreMode === 0 ? scoreMode = 1 : scoreMode = 0"
       size="small" :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
@@ -109,8 +109,6 @@ watchEffect(() => {
         }}
       </div>
     </van-button>
-  </div>
-  <div v-show="!settingStore.isFullScreen" class="mb-3.6 flex gap-3">
     <van-button plain :disabled="!isNotEmptyResults" class="flex-1" @click="unfoldAllGames" size="small"
       :color="settingStore.primaryColor">
       <div class="flex items-center gap-1">
@@ -182,6 +180,10 @@ watchEffect(() => {
 :root {
   --cancel-button-color: black;
   /* 默认颜色 */
+}
+
+.grid-template {
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
 }
 
 .van-dialog__cancel {
