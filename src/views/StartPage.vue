@@ -97,7 +97,8 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </Transition>
-  <van-share-sheet v-model:show="showShare" title="立即分享给好友" :options="options" @select="onSelect" />
+  <van-share-sheet :style="{ color: store.primaryColor }" v-model:show="showShare" title="立即分享给好友" :options="options"
+    @select="onSelect" />
   <van-popup round v-model:show="showQRCode" position="bottom" :style="{ height: '18rem' }">
     <div class="p-6 w-full gap-5 flex flex-col justify-center items-center">
       <img class="mt-5" :src="qrCodeUrl" alt="QR Code" />
@@ -131,8 +132,4 @@ onBeforeUnmount(() => {
     transform: scale(1);
   }
 }
-
-/* .color-success {
-  color: #f01654;
-} */
 </style>
