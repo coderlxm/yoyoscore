@@ -1,7 +1,9 @@
 <script setup>
 import { useResultStore } from "@/stores/result";
 import { useSettingStore } from "@/stores/setting";
+import { toRefs } from "vue";
 const props = defineProps(['results', 'isEditMode', 'scoreMode'])
+const { results, isEditMode } = toRefs(props)
 const emit = defineEmits(['del', 'toast', 'viewTips'])
 const settingStore = useSettingStore()
 const store = useResultStore()
@@ -25,22 +27,19 @@ const viewTips = (item) => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in props.results" :key="item.game" class="w-full flex items-center justify-between">
+      <tr v-for="(item, index) in results" :key="item.game" class="w-full flex items-center justify-between">
         <td class="w-24vw text-center">
           <div class="flex items-center justify-center gap-1">
             <van-tag
-              v-if="props.results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1"
-              plain :color="settingStore.primaryColor">重名</van-tag>
+              v-if="results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1" plain
+              :color="settingStore.primaryColor">重名</van-tag>
             <span>{{ item.name ? item.name : '--' }}</span>
           </div>
         </td>
         <td class="w-24vw text-center">
-          <!-- <span>{{ props.scoreMode === 1 ? ((item.sumScore / props.results[0].sumScore) * 100).toFixed(2) :
-            `${item.pointadd}-${item.pointmin}`
-            }}</span> -->
           <span>{{ store.dealScoreDisplay(props, item) }}</span>
         </td>
-        <td class="w-8vw text-center">{{ settingStore.settingForm.sort === '1' ? index + 1 : props.results.length -
+        <td class="w-8vw text-center">{{ settingStore.settingForm.sort === '1' ? index + 1 : results.length -
           index
           }}
         </td>
@@ -49,7 +48,7 @@ const viewTips = (item) => {
             :color="settingStore.primaryColor">查看</van-button>
           <span v-else>--</span>
         </td>
-        <td class="w-8vw text-center" v-if="props.isEditMode">
+        <td class="w-8vw text-center" v-if="isEditMode">
           <van-button @click="delRecord(item)" :color="settingStore.primaryColor" size="mini">删除</van-button>
         </td>
       </tr>
