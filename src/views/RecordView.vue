@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router";
-// following is a big mistake
+// the following description is a big mistake
 // import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
 import { useRecordStore } from "@/stores/record";
 import { useScoreStore } from "@/stores/score";
