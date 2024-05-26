@@ -46,11 +46,6 @@ const handleKeydown = (event) => {
       break;
   }
 }
-// onMounted(() => {
-//   if (route.name === 'home' && settingForm.value.keyboard) {
-//     addKeyboardListeners();
-//   }
-// })
 const addKeyboardListeners = () => {
   window.addEventListener('keydown', handleKeydown);
   window.addEventListener('keyup', handleKeyup);
