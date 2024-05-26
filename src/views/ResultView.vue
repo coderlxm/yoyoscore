@@ -142,11 +142,6 @@ watchEffect(() => {
         <result-table @viewTips="viewTips" @del="del" :scoreMode="scoreMode" :isEditMode="isEditMode"
           :results="item"></result-table>
       </van-collapse-item>
-      <!-- <van-collapse-item title="选手姓名" name="2">
-      <van-cell-group inset>
-        <van-field v-model="store.name" label="请输入" placeholder="选手姓名" />
-      </van-cell-group>
-    </van-collapse-item> -->
     </van-collapse>
     <van-empty v-show="!isNotEmptyResults" description="暂无成绩，你可以开始记录">
     </van-empty>
