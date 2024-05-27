@@ -18,7 +18,7 @@ A more elegant and beautiful Clicker that supports PWA offline use
 <br>
 
 ## Features
-1.3.1
+1.3.1 is released !
   1. Fix some bugs
   2. stop propagation to solve the next page of click if overlap
   3. optimize some interactions.
