@@ -119,7 +119,7 @@ onUnmounted(() => {
 </template>
 <style>
 .full {
-  min-height: 91vh;
+  min-height: 91dvh;
 }
 
 .button-grid {

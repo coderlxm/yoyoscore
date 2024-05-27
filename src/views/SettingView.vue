@@ -28,7 +28,7 @@ const onSubmit = (values) => {
 // if (!('vibrate' in navigator)) isSupportVib.value = false
 </script>
 <template>
-  <van-form ref="formRef" class="mt-13" colon label-width="35vw" @submit="onSubmit">
+  <van-form ref="formRef" class="mt-13 max-h-73dvh overflow-y-auto" colon label-width="35vw" @submit="onSubmit">
     <div class="item-border mb-8">
       <div class="ml-4 mb-2">除+、-按钮外的按钮触发方式</div>
       <van-field name="trigger" label="按钮触发方式">
@@ -90,25 +90,29 @@ const onSubmit = (values) => {
         </template>
       </van-field>
     </div>
-    <div class="grid gap-5">
-      <van-button :color="store.primaryColor" round block type="primary" native-type="submit">
-        <div class="flex items-center gap-1">
-          <Icon class="font-size-5" icon="material-symbols:save" />
-          保存设置
-        </div>
-      </van-button>
-      <van-button :color="store.primaryColor" @click="back" round block plain type="primary">
-        <div class="flex items-center gap-1">
-          <Icon class="font-size-5" icon="mingcute:back-fill" />
-          返回
-        </div>
-      </van-button>
-    </div>
   </van-form>
+  <div class="mt-5 grid gap-5 grid-template">
+    <van-button :color="store.primaryColor" round block type="primary" native-type="submit">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="material-symbols:save" />
+        保存设置
+      </div>
+    </van-button>
+    <van-button :color="store.primaryColor" @click="back" round block plain type="primary">
+      <div class="flex items-center gap-1">
+        <Icon class="font-size-5" icon="mingcute:back-fill" />
+        返回
+      </div>
+    </van-button>
+  </div>
 </template>
 
 <style>
 .item-border {
   border-bottom: 1px solid #ebedf0;
+}
+
+.grid-template {
+  grid-template-columns: 1fr 1fr
 }
 </style>
