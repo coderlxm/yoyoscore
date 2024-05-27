@@ -108,7 +108,7 @@ const onSubmit = (values) => {
   </van-form>
 </template>
 
-<style>
+<style scoped>
 .item-border {
   border-bottom: 1px solid #ebedf0;
 }
