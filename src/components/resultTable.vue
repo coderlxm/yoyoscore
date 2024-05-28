@@ -11,7 +11,6 @@ const delRecord = (item) => {
   emit('del', item)
 }
 const repeatName = (item) => {
-  console.log(item);
   return results.value.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1
 }
 const viewTips = (item) => {
