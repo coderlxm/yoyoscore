@@ -171,7 +171,7 @@ watchEffect(() => {
     </div>
   </van-popup>
 </template>
-<style>
+<style scoped>
 :root {
   --cancel-button-color: black;
   /* 默认颜色 */
