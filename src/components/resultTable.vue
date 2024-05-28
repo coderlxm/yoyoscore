@@ -32,9 +32,7 @@ const viewTips = (item) => {
       <tr v-for="(item, index) in results" :key="item.game" class="w-full flex items-center justify-between">
         <td class="w-24vw text-center">
           <div class="flex items-center justify-center gap-1">
-            <van-tag
-              v-if="results.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1" plain
-              :color="settingStore.primaryColor">重名</van-tag>
+            <van-tag v-if="repeatName(item)" plain :color="settingStore.primaryColor">重名</van-tag>
             <span>{{ item.name ? item.name : '--' }}</span>
           </div>
         </td>
