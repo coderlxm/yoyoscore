@@ -30,7 +30,7 @@ const onSubmit = (values) => {
 <template>
   <van-form ref="formRef" class="mt-13 max-h-73dvh overflow-y-auto position-relative" colon label-width="35vw"
     @submit="onSubmit">
-    <div class="item-border mb-8">
+    <div class="item-border mb-8 scroll-bar">
       <div class="ml-4 mb-2">除+、-按钮外的按钮触发方式</div>
       <van-field name="trigger" label="按钮触发方式">
         <template #input>
