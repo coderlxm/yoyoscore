@@ -36,8 +36,7 @@ const computedSize = computed(() => {
 })
 const computedTitleStyle = computed(() => {
   return {
-    'color': store.darkTheme === 'dark' ? '#ffffff' : store.primaryColor,
-    'font-size': computedSize.value === 'mini' ? '5vw' : '2vw'
+    'color': store.darkTheme === 'dark' ? '#ffffff' : store.primaryColor
   }
 })
 
@@ -50,7 +49,7 @@ window.addEventListener('resize', () => {
   <div class="flex justify-between items-center h-5vh pt-9 pr-1.5rem pl-1.5rem">
     <div class="flex flex-1 items-center gap-2">
       <Icon class="font-size-8" icon="noto:yo-yo" />
-      <span :style="computedTitleStyle" class="font-700">YoYoScore</span>
+      <span :style="computedTitleStyle" class="font-700 font-size-1.2rem">YoYoScore</span>
     </div>
     <div class="flex gap-1">
       <van-button v-if="store.deferredPrompt" :color="store.primaryColor" :size="computedSize"
