@@ -91,7 +91,7 @@ const onSubmit = (values) => {
         </template>
       </van-field>
     </div>
-    <div class="mt-5 grid gap-5 grid-template position-fixed">
+    <div class="mt-5 grid gap-5 grid-template-box position-fixed">
       <van-button :color="store.primaryColor" round block type="primary" native-type="submit">
         <div class="flex items-center gap-1">
           <Icon class="font-size-5" icon="material-symbols:save" />
@@ -113,7 +113,7 @@ const onSubmit = (values) => {
   border-bottom: 1px solid #ebedf0;
 }
 
-.grid-template {
+.grid-template-box {
   width: 80%;
   grid-template-columns: 1fr 1fr;
   left: 10%;
