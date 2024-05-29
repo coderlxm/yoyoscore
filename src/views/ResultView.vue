@@ -87,7 +87,6 @@ watchEffect(() => {
   } else {
     document.documentElement.style.setProperty(
       '--cancel-button-color', 'black')
-    console.log('333');
   }
 })
 
