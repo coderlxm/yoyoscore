@@ -69,7 +69,7 @@ if (recordStore.activeNames.includes('remark')) recordStore.activeNames = record
       <van-collapse-item title="比赛名称" name="game">
         <van-cell-group inset>
           <van-field v-model="recordStore.game" label="请输入或选择" placeholder="比赛名称" />
-          <div class="mt-3 grid gap-2 w-full tags" v-if="recordStore.recordedGames.length">
+          <div class="mt-3 grid gap-2 w-full grid-cols-2" v-if="recordStore.recordedGames.length">
             <van-tag :color="settingStore.primaryColor" @click="chooseThisTag(item)"
               v-for="(item, index) in recordStore.gamesList" :key="index" type="primary" size="large">{{ item
               }}</van-tag>
@@ -99,9 +99,3 @@ if (recordStore.activeNames.includes('remark')) recordStore.activeNames = record
     </div>
   </div>
 </template>
-
-<style>
-.tags {
-  grid-template-columns: 1fr 1fr;
-}
-</style>
