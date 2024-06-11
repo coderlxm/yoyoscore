@@ -131,7 +131,7 @@ onUnmounted(() => {
             <span>{{
               settingForm.trigger === 1 ? '长按计时' : '计时' }}</span>
           </div>
-          <div v-else>{{ formattedTime }}</div>
+          <span class="font-700 font-size-5" v-else>{{ formattedTime }}</span>
         </van-button>
         <van-button
           v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1, duration: 1000 }"
