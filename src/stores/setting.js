@@ -20,7 +20,8 @@ export const useSettingStore = defineStore('setting', {
     deviceType: '',
     systemOSType: '',
     isFullScreen: !!document.fullscreenElement,
-    deferredPrompt: null
+    deferredPrompt: null,
+    isChrome: false
   }),
   actions: {
     updateFullScreenStatus() {
@@ -58,6 +59,12 @@ export const useSettingStore = defineStore('setting', {
       } else {
         this.deviceType = 'desktop';
         this.settingForm.keyboard = true
+      }
+      // 判断是否为 Chrome 浏览器
+      if (result.browser.name === 'Chrome' && result.browser.version) {
+        this.isChrome = true;
+      } else {
+        this.isChrome = false;
       }
     },
     changeBtnOrder() {

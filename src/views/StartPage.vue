@@ -81,6 +81,7 @@ onBeforeUnmount(() => {
       <div :style="{ 'color': store.primaryColor }" class="flex-1 gap-1 flex flex-col items-center justify-center">
         <Icon class="font-size-30" icon="noto:yo-yo" />
         <h1>YoYoScore</h1>
+        <h5 v-if="!store.isChrome" :style="{ 'color': store.primaryColor }">为获得最佳体验，请使用Chrome浏览器</h5>
         <!-- <div class="flex flex-col">
         <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I don't want to win by making compromises to myself, I've
           always wanted to win on my
@@ -93,7 +94,6 @@ onBeforeUnmount(() => {
           v-if="store.deviceType === 'mobile' && store.systemOSType !== 'ios' && deferredPrompt"
           :color="store.primaryColor" size="large" @click="store.promptInstall()">安装YoYoScore</van-button>
         <van-button :color="store.primaryColor" size="large" @click="share">分享YoYoScore</van-button>
-        <!-- <h2>欢迎使用YoYoScore！</h2> -->
       </div>
     </div>
   </Transition>
