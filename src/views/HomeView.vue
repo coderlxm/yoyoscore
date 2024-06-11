@@ -120,7 +120,7 @@ onUnmounted(() => {
           v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1, duration: 1000 }">
           <div class="flex items-center gap-1">
             <Icon icon="icon-park-outline:clear" class="font-size-5" style="color: #fff;" />
-            <span>{{
+            <span class="font-size-3">{{
               settingForm.trigger === 1 ? '长按清零' : '清零' }}</span>
           </div>
         </van-button>
@@ -128,7 +128,7 @@ onUnmounted(() => {
           v-longpress="{ onLongPress: startTiming, onShortPress: startTiming, enabled: settingForm.trigger === 1, duration: 1000 }">
           <div class="flex items-center gap-1" v-if="!isShowClock">
             <Icon icon="mdi:clock" class="font-size-5" />
-            <span>{{
+            <span class="font-size-3">{{
               settingForm.trigger === 1 ? '长按计时' : '计时' }}</span>
           </div>
           <span class="font-700 font-size-5" v-else>{{ formattedTime }}</span>
@@ -138,7 +138,7 @@ onUnmounted(() => {
           :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon icon="jam:write" class="font-size-5" />
-            <span>{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</span>
+            <span class="font-size-3">{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</span>
           </div>
         </van-button>
       </div>
