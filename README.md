@@ -85,7 +85,7 @@ Inspired by [YoClicker] A WeChat mini Program.
 - [Vant 4](https://github.com/youzan/vant/) - A lightweight, customizable Vue UI library for mobile web apps.
 - [Iconify](https://iconify.design/) - All popular icon sets, one framework.
 - [Vite](https://github.com/vitejs/vite) - Next Generation Frontend Tooling.
-- [radash](https://radash-docs.vercel.app/) - The next library you can’t live without.
+- [radash](https://radash-docs.vercel.app/) - Functional utility library - modern, simple, typed, powerful.
 - [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa) - Zero-config PWA Framework-agnostic Plugin for Vite.
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=antfu.unocss)
 
