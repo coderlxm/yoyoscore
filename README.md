@@ -21,12 +21,13 @@ A more elegant and beautiful Clicker that supports PWA offline use
 1.3.2 is released !
   1. Added timer feature.
   2. Optimize styles of homepage.
+  3. Use radash to replace native method.
 
 1.3.1 is released !
-  1. Fix some bugs
-  2. Stop propagation to solve the next page of click if overlap
+  1. Fix some bugs.
+  2. Stop propagation to solve the next page of click if overlap.
   3. Optimize some interactions.
-  4. Added start page
+  4. Added start page.
   5. Added install-button and adapted android device to install directly.
 
 1.3 is released ! (A number of improvements have been included)
@@ -35,7 +36,7 @@ A more elegant and beautiful Clicker that supports PWA offline use
   3. Fixed some bugs about display. 
   4. The item of game result can be toggled.
   5. All deletions are supported in results page.
-  6. Full support github actions to make deploying much easier
+  6. Full support github actions to make deploying much easier.
   
 1.2.2 is released !
   1. The tag of repeat contestants will be marked.
