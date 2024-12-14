@@ -34,5 +34,5 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 148.135.113.98 >> ~/.ssh/known_hosts
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" dist/ root@148.135.113.98:/www/wwwroot/yoyoscore.cc
+          ssh-keyscan -H 142.171.182.244 >> ~/.ssh/known_hosts
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa" dist/ root@142.171.182.244:/www/wwwroot/yoyoscore.cc
