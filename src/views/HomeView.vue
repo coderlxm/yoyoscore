@@ -6,6 +6,8 @@ import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
 const { settingForm, btnOrder, primaryColor } = storeToRefs(useSettingStore())
+const isLongPressEnabled = computed(() => settingForm.value.trigger === 1)
+const triggerLabel = computed(() => (label) => isLongPressEnabled.value ? `长按${label}` : label)
 const router = useRouter()
 const route = useRoute()
 const toSetting = () => {
@@ -117,46 +119,44 @@ onUnmounted(() => {
     <div :style="{ order: btnOrder.orderMedium }" class="flex flex-col gap-4">
       <div class="grid gap-3 grid-cols-3">
         <van-button :color="primaryColor"
-          v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: settingForm.trigger === 1, duration: 1000 }">
+          v-longpress="{ onLongPress: store.pressToZero, onShortPress: store.pressToZero, enabled: isLongPressEnabled, duration: 1000 }">
           <div class="flex items-center gap-1">
             <Icon icon="icon-park-outline:clear" class="font-size-5" style="color: #fff;" />
-            <span class="font-size-3">{{
-              settingForm.trigger === 1 ? '长按清零' : '清零' }}</span>
+            <span class="font-size-3">{{ triggerLabel('清零') }}</span>
           </div>
         </van-button>
         <van-button :color="primaryColor" plain
-          v-longpress="{ onLongPress: startTiming, onShortPress: startTiming, enabled: settingForm.trigger === 1, duration: 1000 }">
+          v-longpress="{ onLongPress: startTiming, onShortPress: startTiming, enabled: isLongPressEnabled, duration: 1000 }">
           <div class="flex items-center gap-1" v-if="!isShowClock">
             <Icon icon="mdi:clock" class="font-size-5" />
-            <span class="font-size-3">{{
-              settingForm.trigger === 1 ? '长按计时' : '计时' }}</span>
+            <span class="font-size-3">{{ triggerLabel('计时') }}</span>
           </div>
           <span class="font-700 font-size-5" v-else>{{ formattedTime }}</span>
         </van-button>
         <van-button
-          v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: settingForm.trigger === 1, duration: 1000 }"
+          v-longpress="{ onLongPress: toRecord, onShortPress: toRecord, enabled: isLongPressEnabled, duration: 1000 }"
           :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon icon="jam:write" class="font-size-5" />
-            <span class="font-size-3">{{ settingForm.trigger === 1 ? '长按记录' : '记录' }}</span>
+            <span class="font-size-3">{{ triggerLabel('记录') }}</span>
           </div>
         </van-button>
       </div>
       <div class="grid gap-3 grid-cols-2">
         <van-button
-          v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: settingForm.trigger === 1, duration: 1000 }"
+          v-longpress="{ onLongPress: toSetting, onShortPress: toSetting, enabled: isLongPressEnabled, duration: 1000 }"
           plain :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="uil:setting" />
-            <span>{{ settingForm.trigger === 1 ? '长按设置' : '设置' }}</span>
+            <span>{{ triggerLabel('设置') }}</span>
           </div>
         </van-button>
         <van-button
-          v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: settingForm.trigger === 1, duration: 1000 }"
+          v-longpress="{ onLongPress: toResult, onShortPress: toResult, enabled: isLongPressEnabled, duration: 1000 }"
           :color="primaryColor">
           <div class="flex items-center gap-1">
             <Icon class="font-size-5" icon="carbon:result" />
-            <span>{{ settingForm.trigger === 1 ? '长按查看结果' : '查看结果' }}</span>
+            <span>{{ triggerLabel('查看结果') }}</span>
           </div>
         </van-button>
       </div>
