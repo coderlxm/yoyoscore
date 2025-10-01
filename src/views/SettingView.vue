@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from "@/stores/setting";
 import { Icon } from '@iconify/vue';
+defineOptions({ name: 'settingPage' })
 const router = useRouter()
 const store = useSettingStore()
 const back = () => {

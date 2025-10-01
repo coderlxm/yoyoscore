@@ -8,6 +8,7 @@ import { useResultStore } from "@/stores/result";
 import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
+defineOptions({ name: 'recordPage' })
 const router = useRouter()
 const recordStore = useRecordStore()
 const scoreStore = useScoreStore()

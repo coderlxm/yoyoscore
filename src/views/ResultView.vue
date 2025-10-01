@@ -9,6 +9,7 @@ import { showConfirmDialog } from 'vant';
 import { Icon } from '@iconify/vue';
 import exportResults from "@/utils/exportToXlsx";
 import resultTable from "@/components/resultTable.vue"
+defineOptions({ name: 'resultPage' })
 const router = useRouter()
 const recordStore = useRecordStore()
 const settingStore = useSettingStore()

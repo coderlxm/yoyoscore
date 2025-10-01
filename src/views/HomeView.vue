@@ -5,6 +5,7 @@ import { useScoreStore } from "@/stores/score";
 import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
+defineOptions({ name: 'homePage' })
 const { settingForm, btnOrder, primaryColor } = storeToRefs(useSettingStore())
 const isLongPressEnabled = computed(() => settingForm.value.trigger === 1)
 const triggerLabel = computed(() => (label) => isLongPressEnabled.value ? `长按${label}` : label)
