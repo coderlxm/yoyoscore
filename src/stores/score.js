@@ -23,8 +23,6 @@ export const useScoreStore = defineStore('score', {
       if (!isClient) return null
       if (audioContext) return audioContext
       const ContextCtor = window.AudioContext || window.webkitAudioContext
-      console.log(window.AudioContext)
-      console.log(window.webkitAudioContext)
       if (!ContextCtor) return null
       audioContext = new ContextCtor()
       return audioContext
