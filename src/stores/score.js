@@ -1,13 +1,17 @@
 // import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useSettingStore } from "./setting";
+import { useSettingStore } from './setting'
 import keyDownAudio from '@/assets/sounds/typing.mp3'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
+
+let audioContext = null
+let audioBuffer = null
+let preloadPromise = null
+const isClient = typeof window !== 'undefined'
 export const useScoreStore = defineStore('score', {
   state: () => ({
     pointadd: 0,
     pointmin: 0,
-    keyDownAudio: null,
     cont: { name: '', score: 0, rank: 0 },
     contInfo: []
   }),
@@ -15,21 +19,67 @@ export const useScoreStore = defineStore('score', {
     computedScore: (state) => state.pointadd - state.pointmin
   },
   actions: {
-    preloadAudio() {
-      // 在 Store 初始化时预加载音效
-      this.keyDownAudio = new Audio(keyDownAudio);
-      this.keyDownAudio.preload = 'auto';
-      this.keyDownAudio.load(); // 预加载音效数据
+    async ensureAudioContext() {
+      if (!isClient) return null
+      if (audioContext) return audioContext
+      const ContextCtor = window.AudioContext || window.webkitAudioContext
+      console.log(window.AudioContext)
+      console.log(window.webkitAudioContext)
+      if (!ContextCtor) return null
+      audioContext = new ContextCtor()
+      return audioContext
+    },
+    async preloadAudio() {
+      if (!isClient) return
+      if (audioBuffer) return
+      if (preloadPromise) {
+        await preloadPromise
+        return
+      }
+      const context = await this.ensureAudioContext()
+      if (!context) return
+      preloadPromise = fetch(keyDownAudio)
+        .then((response) => response.arrayBuffer())
+        .then((arrayBuffer) => new Promise((resolve, reject) => {
+          context.decodeAudioData(arrayBuffer, resolve, reject)
+        }))
+        .then((decodedBuffer) => {
+          audioBuffer = decodedBuffer
+        })
+        .catch((error) => {
+          console.error('[score] Failed to preload audio', error)
+        })
+        .finally(() => {
+          preloadPromise = null
+        })
+      await preloadPromise
+    },
+    async playAudio() {
+      const context = await this.ensureAudioContext()
+      if (!context) return
+      if (!audioBuffer) await this.preloadAudio()
+      if (!audioBuffer) return
+      if (context.state === 'suspended') {
+        try {
+          await context.resume()
+        } catch (error) {
+          console.error('[score] Failed to resume audio context', error)
+          return
+        }
+      }
+      const source = context.createBufferSource()
+      source.buffer = audioBuffer
+      source.connect(context.destination)
+      source.start(0)
     },
     async sum(sumMode) {
       const { settingForm } = storeToRefs(useSettingStore())
       // console.log(this.keyDownAudio.play());
-      if (this.keyDownAudio && settingForm.value.audio === '1') {
+      if (settingForm.value.audio === '1') {
         try {
-          this.keyDownAudio.currentTime = 0
-          await this.keyDownAudio.play()
+          await this.playAudio()
         } catch (error) {
-          console.error(error)
+          console.error('[score] Failed to play audio', error)
         }
       }
       if (settingForm.value.vibrate === '1' && settingForm.value.vibMethod === '1') {
