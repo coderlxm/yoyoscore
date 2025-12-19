@@ -1,11 +1,10 @@
-<script setup>
+<script setup name="startPage">
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from '@/stores/setting';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from "pinia";
 import QRCode from 'qrcode';
-defineOptions({ name: 'startPage' })
 const router = useRouter()
 const store = useSettingStore()
 const startUse = () => {

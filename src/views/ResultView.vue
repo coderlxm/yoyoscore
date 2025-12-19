@@ -1,4 +1,4 @@
-<script setup>
+<script setup name="resultPage">
 import { ref, reactive, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
 // import { recordStore, resultStore, settingStore } from "@/stores";
@@ -9,7 +9,6 @@ import { showConfirmDialog } from 'vant';
 import { Icon } from '@iconify/vue';
 import exportResults from "@/utils/exportToXlsx";
 import resultTable from "@/components/resultTable.vue"
-defineOptions({ name: 'resultPage' })
 const router = useRouter()
 const recordStore = useRecordStore()
 const settingStore = useSettingStore()

@@ -1,4 +1,4 @@
-<script setup>
+<script setup name="recordPage">
 import { useRouter } from "vue-router";
 // the following description is a big mistake
 // import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
@@ -8,7 +8,6 @@ import { useResultStore } from "@/stores/result";
 import { useSettingStore } from "@/stores/setting";
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
-defineOptions({ name: 'recordPage' })
 const router = useRouter()
 const recordStore = useRecordStore()
 const scoreStore = useScoreStore()
