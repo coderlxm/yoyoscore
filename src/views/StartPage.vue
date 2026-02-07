@@ -5,6 +5,7 @@ import { useSettingStore } from '@/stores/setting';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from "pinia";
 import QRCode from 'qrcode';
+import { showSuccessToast } from 'vant';
 const router = useRouter()
 const store = useSettingStore()
 const startUse = () => {
