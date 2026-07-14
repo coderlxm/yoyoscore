@@ -5,6 +5,20 @@
 html,
 body {
   height: 100%;
+  margin: 0;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+button,
+input,
+textarea {
+  font-size: 100%;
 }
 
 #app {

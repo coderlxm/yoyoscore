@@ -1,0 +1,8 @@
+minimumReleaseAge: 10080
+
+overrides:
+  # Remove after the newer patch has passed the seven-day cooling period.
+  path-scurry@2.0.2>lru-cache: 11.5.1
+
+allowBuilds:
+  esbuild: true

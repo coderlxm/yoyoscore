@@ -3,21 +3,16 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { VantResolver, VantImports } from '@vant/auto-import-resolver';
-import { VitePWA } from 'vite-plugin-pwa';
-// https://vitejs.dev/config/
+import Components from 'unplugin-vue-components/vite'
+import { VantResolver } from '@vant/auto-import-resolver'
+import { VitePWA } from 'vite-plugin-pwa'
+
 export default defineConfig({
   plugins: [
     vue(),
     UnoCSS(),
-    AutoImport({
-      imports: [VantImports()],
-      resolvers: [VantResolver()],
-    }),
     Components({
-      resolvers: [VantResolver()],
+      resolvers: [VantResolver()]
     }),
     VitePWA({
       registerType: 'autoUpdate',
@@ -48,7 +43,7 @@ export default defineConfig({
     })
   ],
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',

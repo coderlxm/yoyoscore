@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import UAParser from 'ua-parser-js';
+import { getPlatformCapabilities } from '@/utils/platform'
+
 export const useSettingStore = defineStore('setting', {
   state: () => ({
     settingForm: {
@@ -20,8 +21,7 @@ export const useSettingStore = defineStore('setting', {
     deviceType: '',
     systemOSType: '',
     isFullScreen: !!document.fullscreenElement,
-    deferredPrompt: null,
-    isChrome: false
+    deferredPrompt: null
   }),
   actions: {
     updateFullScreenStatus() {
@@ -44,28 +44,10 @@ export const useSettingStore = defineStore('setting', {
       }
     },
     platformPre() {
-      const parser = new UAParser();
-      const result = parser.getResult();
-      const device = result.device.type;
-      const os = result.os
-      if (os.name.toLowerCase() === 'ios') {
-        this.systemOSType = 'ios'
-      } else {
-        this.systemOSType = ''
-      }
-      if (device === 'mobile' || device === 'tablet') {
-        this.deviceType = 'mobile';
-        this.settingForm.keyboard = false
-      } else {
-        this.deviceType = 'desktop';
-        this.settingForm.keyboard = true
-      }
-      // 判断是否为 Chrome 浏览器
-      if (result.browser.name === 'Chrome' && result.browser.version) {
-        this.isChrome = true;
-      } else {
-        this.isChrome = false;
-      }
+      const { deviceType, systemOSType } = getPlatformCapabilities()
+      this.deviceType = deviceType
+      this.systemOSType = systemOSType
+      this.settingForm.keyboard = deviceType === 'desktop'
     },
     changeBtnOrder() {
       const [top, medium, bottom] = Object.values(this.btnOrder)
