@@ -1,19 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { useResultStore } from "@/stores/result";
 import { useSettingStore } from "@/stores/setting";
 import { toRefs } from "vue";
-const props = defineProps(['results', 'isEditMode', 'scoreMode'])
+import type { GameRecord, ScoreMode } from '@/types/domain'
+const props = defineProps<{
+  results: GameRecord[]
+  isEditMode: boolean
+  scoreMode: ScoreMode
+}>()
 const { results, isEditMode } = toRefs(props)
-const emit = defineEmits(['del', 'toast', 'viewTips'])
+const emit = defineEmits<{
+  del: [item: GameRecord]
+  toast: [item: GameRecord]
+  viewTips: [item: GameRecord]
+}>()
 const settingStore = useSettingStore()
 const store = useResultStore()
-const delRecord = (item) => {
+const delRecord = (item: GameRecord) => {
   emit('del', item)
 }
-const repeatName = (item) => {
+const repeatName = (item: GameRecord) => {
   return results.value.filter(result => result.name && (result.name.trim() === item.name.trim())).length > 1
 }
-const viewTips = (item) => {
+const viewTips = (item: GameRecord) => {
   emit('viewTips', item)
 }
 </script>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from '@/stores/setting';
@@ -9,12 +9,12 @@ import { showSuccessToast } from 'vant';
 const router = useRouter()
 const store = useSettingStore()
 const startUse = () => {
-  sessionStorage.setItem('isRegUser', true)
+  sessionStorage.setItem('isRegUser', 'true')
   router.push({ name: 'home' })
 }
 const { deferredPrompt } = storeToRefs(store)
 
-const handleBeforeInstallPrompt = (e) => {
+const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
   e.preventDefault();
   deferredPrompt.value = e;
 };
@@ -32,7 +32,6 @@ const generateQRCode = async () => {
   try {
     qrCodeUrl.value = await QRCode.toDataURL(window.location.href, {
       width: 150, // 设置二维码宽度
-      height: 150, // 设置二维码高度
       margin: 2 // 设置边距（可选）
     });
     showQRCode.value = true;
@@ -40,7 +39,7 @@ const generateQRCode = async () => {
     console.error('Failed to generate QR code', error);
   }
 };
-const onSelect = async (option) => {
+const onSelect = async (option: { name: string; icon: string }) => {
   // showToast(option.name);
   switch (option.name) {
     case '二维码':

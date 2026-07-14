@@ -1,18 +1,26 @@
 import { describe, expect, it, vi } from 'vitest'
 import writeExcelFile from 'write-excel-file/universal'
+import type { Cell } from 'write-excel-file/browser'
 
 import { buildExportSheets } from './exportToXlsx'
+import type { GameRecord, ScoreFormatter } from '@/types/domain'
+
+const cellValue = (cell: Cell): unknown => {
+  if (cell !== null && typeof cell === 'object' && 'value' in cell) {
+    return cell.value
+  }
+  return cell
+}
 
 describe('Excel export data', () => {
   it('preserves sheets, score formatting, rank, and remarks', () => {
-    const scoreFormatter = vi.fn(() => '100.00(10-0=10)')
+    const scoreFormatter: ScoreFormatter = vi.fn(() => '100.00(10-0=10)')
+    const records: GameRecord[] = [
+      { name: 'Alice', pointadd: 10, pointmin: 0, sumScore: 10, tips: 'clean', game: 'Final' },
+      { name: '', pointadd: 5, pointmin: 1, sumScore: 4, tips: '', game: 'Final' }
+    ]
     const sheets = buildExportSheets({
-      groupedRecords: {
-        Final: [
-          { name: 'Alice', pointadd: 10, pointmin: 0, sumScore: 10, tips: 'clean' },
-          { name: '', pointadd: 5, pointmin: 1, sumScore: 4, tips: '' }
-        ]
-      },
+      groupedRecords: { Final: records },
       primaryColor: '#f01654',
       scoreFormatter,
       sortOrder: '1'
@@ -25,13 +33,13 @@ describe('Excel export data', () => {
       columnSpan: 4,
       backgroundColor: '#f01654'
     })
-    expect(sheets[0].data[2].map(({ value }) => value)).toEqual([
+    expect(sheets[0].data[2].map(cellValue)).toEqual([
       'Alice',
       '100.00(10-0=10)',
       1,
       'clean'
     ])
-    expect(sheets[0].data[3].map(({ value }) => value)).toEqual([
+    expect(sheets[0].data[3].map(cellValue)).toEqual([
       '--',
       '100.00(10-0=10)',
       2,
@@ -41,10 +49,9 @@ describe('Excel export data', () => {
   })
 
   it('produces a non-empty XLSX blob', async () => {
+    const records: GameRecord[] = [{ name: 'Alice', pointadd: 0, pointmin: 0, sumScore: 10, tips: '', game: 'Final' }]
     const sheets = buildExportSheets({
-      groupedRecords: {
-        Final: [{ name: 'Alice', sumScore: 10 }]
-      },
+      groupedRecords: { Final: records },
       primaryColor: '#f01654',
       scoreFormatter: () => '10',
       sortOrder: '1'

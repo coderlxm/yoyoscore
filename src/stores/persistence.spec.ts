@@ -5,12 +5,12 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import { useSettingStore } from './setting'
 
-const values = new Map()
+const values = new Map<string, string>()
 const storage = {
   clear: () => values.clear(),
-  getItem: (key) => values.get(key) ?? null,
-  removeItem: (key) => values.delete(key),
-  setItem: (key, value) => values.set(key, String(value))
+  getItem: (key: string) => values.get(key) ?? null,
+  removeItem: (key: string) => values.delete(key),
+  setItem: (key: string, value: string) => values.set(key, String(value))
 }
 
 describe('persisted Pinia state', () => {

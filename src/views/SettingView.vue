@@ -1,14 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useSettingStore } from "@/stores/setting";
 import { Icon } from '@iconify/vue';
+import type { SettingForm } from '@/types/domain'
 const router = useRouter()
 const store = useSettingStore()
 const back = () => {
   router.push({ name: 'home' })
 }
-const triggerMode = ref(1)
+const triggerMode = ref<0 | 1>(1)
 const audioSw = ref('1')
 const keyboardSw = ref(true)
 const vibSw = ref('2')
@@ -20,7 +21,7 @@ sortBy.value = store.settingForm.sort
 vibSw.value = store.settingForm.vibrate
 vibMethod.value = store.settingForm.vibMethod
 keyboardSw.value = store.settingForm.keyboard
-const onSubmit = (values) => {
+const onSubmit = (values: SettingForm) => {
   store.$patch({ settingForm: values })
   router.push({ name: 'home' })
 }

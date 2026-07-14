@@ -12,12 +12,13 @@ export default defineConfig({
     vue(),
     UnoCSS(),
     Components({
+      dts: 'src/components.d.ts',
       resolvers: [VantResolver()]
     }),
     VitePWA({
       registerType: 'autoUpdate',
       srcDir: 'src',
-      filename: 'service-worker.js',
+      filename: 'service-worker.ts',
       strategies: 'injectManifest',
       injectRegister: 'auto',
       manifest: {

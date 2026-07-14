@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
 // the following description is a big mistake
 // import { recordStore, scoreStore, settingStore, resultStore } from "@/stores";
@@ -32,7 +32,7 @@ const save = () => {
   recordStore.tips = ''
   router.push({ name: 'home' })
 }
-const chooseThisTag = (item) => {
+const chooseThisTag = (item: string) => {
   recordStore.game = item
 }
 // always keeping remark item collapsed

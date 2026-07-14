@@ -1,8 +1,25 @@
 import { defineStore } from "pinia";
 import { getPlatformCapabilities } from '@/utils/platform'
+import type {
+  BtnOrder,
+  PlatformCapabilities,
+  SettingForm,
+  Theme
+} from '@/types/domain'
+
+interface SettingState {
+  settingForm: SettingForm
+  primaryColor: string
+  darkTheme: Theme
+  btnOrder: BtnOrder
+  deviceType: PlatformCapabilities['deviceType'] | ''
+  systemOSType: PlatformCapabilities['systemOSType']
+  isFullScreen: boolean
+  deferredPrompt: BeforeInstallPromptEvent | null
+}
 
 export const useSettingStore = defineStore('setting', {
-  state: () => ({
+  state: (): SettingState => ({
     settingForm: {
       audio: '1',
       trigger: 1,
@@ -28,11 +45,9 @@ export const useSettingStore = defineStore('setting', {
       this.isFullScreen = !!document.fullscreenElement;
     },
     setupFullScreenListener() {
-      // 设置监听器，当全屏状态改变时更新状态
       document.addEventListener('fullscreenchange', this.updateFullScreenStatus);
     },
     removeFullScreenListener() {
-      // 移除监听器
       document.removeEventListener('fullscreenchange', this.updateFullScreenStatus);
     },
     async promptInstall() {

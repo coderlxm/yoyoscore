@@ -1,8 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { useSettingStore } from '@/stores/setting';
 import { useRoute } from "vue-router";
 import { computed, ref } from "vue";
 import { Icon } from '@iconify/vue';
+import type { Theme } from '@/types/domain'
 const route = useRoute()
 const store = useSettingStore()
 const toggleFullScreen = () => {
@@ -18,10 +19,10 @@ const toggleFullScreen = () => {
     }
   }
 }
-const emit = defineEmits(['changeTheme'])
-const props = defineProps(['currentTheme'])
+const emit = defineEmits<{ changeTheme: [value: Theme] }>()
+const props = defineProps<{ currentTheme: Theme }>()
 const toggle = () => {
-  const currentTheme = props.currentTheme === 'light' ? 'dark' : 'light'
+  const currentTheme: Theme = props.currentTheme === 'light' ? 'dark' : 'light'
   emit('changeTheme', currentTheme)
 }
 const toggleLayout = () => {

@@ -1,10 +1,19 @@
-// import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useSettingStore } from "./setting";
-import keyDownAudio from '@/assets/sounds/typing.mp3'
 import { storeToRefs } from 'pinia';
+import keyDownAudio from '@/assets/sounds/typing.mp3'
+import type { ScoreContent } from '@/types/domain'
+
+interface ScoreState {
+  pointadd: number
+  pointmin: number
+  keyDownAudio: HTMLAudioElement | null
+  cont: ScoreContent
+  contInfo: ScoreContent[]
+}
+
 export const useScoreStore = defineStore('score', {
-  state: () => ({
+  state: (): ScoreState => ({
     pointadd: 0,
     pointmin: 0,
     keyDownAudio: null,
@@ -12,18 +21,16 @@ export const useScoreStore = defineStore('score', {
     contInfo: []
   }),
   getters: {
-    computedScore: (state) => state.pointadd - state.pointmin
+    computedScore: (state): number => state.pointadd - state.pointmin
   },
   actions: {
     preloadAudio() {
-      // 在 Store 初始化时预加载音效
       this.keyDownAudio = new Audio(keyDownAudio);
       this.keyDownAudio.preload = 'auto';
-      this.keyDownAudio.load(); // 预加载音效数据
+      this.keyDownAudio.load();
     },
-    async sum(sumMode) {
+    async sum(sumMode?: 'add') {
       const { settingForm } = storeToRefs(useSettingStore())
-      // console.log(this.keyDownAudio.play());
       if (this.keyDownAudio && settingForm.value.audio === '1') {
         try {
           this.keyDownAudio.currentTime = 0
@@ -48,10 +55,5 @@ export const useScoreStore = defineStore('score', {
       this.pointmin = 0
     }
   },
-  // getters: {
-  //   sum: () => {
-  //     return this.pointadd - this.pointmin
-  //   }
-  // },
   persist: true
 })

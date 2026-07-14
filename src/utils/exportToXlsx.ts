@@ -1,8 +1,10 @@
 import writeExcelFile from 'write-excel-file/browser'
+import type { CellObject, Cell } from 'write-excel-file/browser'
 
 import { useRecordStore } from '@/stores/record'
 import { useResultStore } from '@/stores/result'
 import { useSettingStore } from '@/stores/setting'
+import type { GroupedRecords, ScoreFormatter, SortDirection } from '@/types/domain'
 
 const headers = ['选手姓名', '得分', '排名', '备注']
 const columns = [
@@ -11,7 +13,8 @@ const columns = [
   { width: 10 },
   { width: 40 }
 ]
-const borderedCell = {
+
+const borderedCell: CellObject = {
   align: 'center',
   alignVertical: 'center',
   borderColor: '#000000',
@@ -24,9 +27,14 @@ export function buildExportSheets({
   primaryColor,
   scoreFormatter,
   sortOrder
+}: {
+  groupedRecords: GroupedRecords
+  primaryColor: string
+  scoreFormatter: ScoreFormatter
+  sortOrder: SortDirection
 }) {
   return Object.entries(groupedRecords).map(([title, results]) => {
-    const titleCell = {
+    const titleCell: CellObject = {
       ...borderedCell,
       value: title || ' ',
       columnSpan: 4,
@@ -36,7 +44,7 @@ export function buildExportSheets({
       textColor: '#FFFFFF',
       backgroundColor: primaryColor
     }
-    const headerRow = headers.map((value) => ({
+    const headerRow: CellObject[] = headers.map((value) => ({
       ...borderedCell,
       value,
       height: 30,
@@ -44,14 +52,14 @@ export function buildExportSheets({
       textColor: '#FFFFFF',
       backgroundColor: primaryColor
     }))
-    const dataRows = results.map((result, index) => {
+    const dataRows: Cell[][] = results.map((result, index) => {
       const rank = sortOrder === '1' ? index + 1 : results.length - index
       return [
         result.name || '--',
         scoreFormatter({ scoreMode: 'full', results }, result),
         rank,
         result.tips || '--'
-      ].map((value) => ({ ...borderedCell, value, height: 25 }))
+      ].map((value): CellObject => ({ ...borderedCell, value, height: 25 }))
     })
 
     return {
@@ -62,7 +70,7 @@ export function buildExportSheets({
   })
 }
 
-export default async function exportResults() {
+export default async function exportResults(): Promise<void> {
   const recordStore = useRecordStore()
   const resultStore = useResultStore()
   const settingStore = useSettingStore()

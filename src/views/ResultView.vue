@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, watchEffect, computed } from "vue";
 import { useRouter } from "vue-router";
 // import { recordStore, resultStore, settingStore } from "@/stores";
@@ -9,22 +9,23 @@ import { showConfirmDialog } from 'vant';
 import { Icon } from '@iconify/vue';
 import exportResults from "@/utils/exportToXlsx";
 import resultTable from "@/components/resultTable.vue"
+import type { GameRecord, ScoreMode } from '@/types/domain'
 const router = useRouter()
 const recordStore = useRecordStore()
 const settingStore = useSettingStore()
 const resultStore = useResultStore()
 const isEditMode = ref(false)
 // 默认为1 总分模式1 计数模式0
-const scoreMode = ref(1)
+const scoreMode = ref<ScoreMode>(1)
 
-const del = (item) => {
+const del = (item: GameRecord) => {
   const itemAtIndex = recordStore.recordedGames.findIndex((record) => item === record)
   if (itemAtIndex > -1) {
     recordStore.recordedGames.splice(itemAtIndex, 1)
   }
 }
 
-const delGame = (item) => {
+const delGame = (item: GameRecord[]) => {
   showConfirmDialog({
     title: `确认要删除比赛${item[0].game}吗？`,
     theme: 'round-button',
@@ -66,8 +67,8 @@ const isNotEmptyResults = computed(() => {
 })
 
 const showBottom = ref(false)
-const contsObj = reactive({})
-const viewTips = (value) => {
+const contsObj = reactive<Partial<GameRecord>>({})
+const viewTips = (value: GameRecord) => {
   Object.assign(contsObj, value)
   showBottom.value = true
 }

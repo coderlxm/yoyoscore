@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onUnmounted, ref, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useScoreStore } from "@/stores/score";
@@ -15,7 +15,7 @@ const isShowClock = ref(false)
 // 定义响应式变量
 const startTime = ref(0);
 const elapsed = ref(0);
-const timer = ref(null);
+const timer = ref<ReturnType<typeof setInterval> | null>(null);
 const running = ref(false);
 
 // 格式化时间为 MM:SS:MS 的格式
@@ -46,7 +46,7 @@ const startTiming = () => {
 // 停止计时器
 const stopTimer = () => {
   running.value = false;
-  clearInterval(timer.value);
+  if (timer.value !== null) clearInterval(timer.value);
   timer.value = null;
 };
 
@@ -63,12 +63,12 @@ const toRecord = () => {
 const toResult = () => {
   router.push({ name: 'result' })
 }
-const pressedKeys = {}
-const handleKeyup = (event) => {
+const pressedKeys: Record<string, boolean> = {}
+const handleKeyup = (event: KeyboardEvent) => {
   // 当按键松开时，将其从按下状态中移除
   delete pressedKeys[event.code];
 }
-const handleKeydown = (event) => {
+const handleKeydown = (event: KeyboardEvent) => {
   if (pressedKeys[event.code]) {
     // 如果按键已记录为按下状态，不再触发
     return;
